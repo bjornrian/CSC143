@@ -1,4 +1,4 @@
 package stanleyStorage;
 
-public class Customer {
+public class Main {
 }
