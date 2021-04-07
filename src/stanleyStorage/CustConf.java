@@ -32,6 +32,14 @@ public class CustConf {
         return balance;
     }
 
+    public void chargeCust(int amount) {
+        this.balance += amount;
+    }
+
+    public void creditCust(int amount) {
+        this.balance -= amount;
+    }
+
     private String verifyString(String str) {
         if (str == null || str.isEmpty()) {
             throw new IllegalArgumentException("Error: String cannot be equal to null or empty.");

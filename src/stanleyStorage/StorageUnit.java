@@ -1,13 +1,11 @@
 package stanleyStorage;
 
-import java.util.ArrayList;
-
 public class StorageUnit {
 
     private int width;
     private int length;
     private int height;
-    private ArrayList<CustConf> customer;
+    private CustConf customer;
     private double price;
     private Enum<unitType> unitType;
     private String startDate;
@@ -15,7 +13,7 @@ public class StorageUnit {
         STANDARD, HUMIDITY_CHECKED, TEMPERATURE_CHECKED
     }
 
-    public StorageUnit(int width, int length, int height, ArrayList<CustConf> customer,
+    public StorageUnit(int width, int length, int height, CustConf customer,
             double price, Enum<unitType> unitType, String startDate) {
         this.width = width;
         this.length = width;
@@ -38,7 +36,7 @@ public class StorageUnit {
         return height;
     }
 
-    public ArrayList<CustConf> getCustomer() {
+    public CustConf getCustomer() {
         return customer;
     }
 
@@ -54,7 +52,7 @@ public class StorageUnit {
         return startDate;
     }
 
-    public void setNewCustomer(ArrayList<CustConf> customer, String startDate) {
+    public void setNewCustomer(CustConf customer, String startDate) {
         this.customer = customer;
         this.startDate = startDate;
     }
