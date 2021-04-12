@@ -8,6 +8,7 @@ public class Customer implements CustomerInterface{
     public Customer(String name, String phone) {
         this.name = name;
         this.phone = phone;
+        balance = 0;
     }
 
     public String getName() {
@@ -31,10 +32,12 @@ public class Customer implements CustomerInterface{
     }
 
     public double charge(double amount) {
-        return 0;
+        this.balance += amount;
+        return this.balance;
     }
 
     public double credit(double amount) {
-        return 0;
+        this.balance -= amount;
+        return this.balance;
     }
 }

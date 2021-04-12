@@ -9,6 +9,7 @@ public class StorageUnit implements StorageUnitInterface {
     public Customer customer;
     public LocalDate rentalStart;
     public double price;
+    public double standardPrice = 100;
     public UnitType unitType;
 
     public StorageUnit(int width, int length, int height, UnitType unitType) {
@@ -31,11 +32,16 @@ public class StorageUnit implements StorageUnitInterface {
     }
 
     public StorageUnitInterface.UnitType getType() {
-        return null;
+        return this.unitType;
     }
 
     public double getPrice() {
-        return price;
+        if(null == customer) {
+            return standardPrice;
+        }
+        else {
+            return price;
+        }
     }
 
     public Customer getCustomer() {
@@ -47,11 +53,16 @@ public class StorageUnit implements StorageUnitInterface {
     }
 
     public boolean rent(Customer customer, LocalDate rentalStart, double price) {
-        return false;
+        this.customer = customer;
+        this.rentalStart = rentalStart;
+        this.price = price;
+        return true;
     }
 
     public boolean release() {
-        return false;
+        this.customer = null;
+        this.rentalStart = null;
+        return true;
     }
 
     public String toString() {

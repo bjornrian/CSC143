@@ -4,54 +4,54 @@ public class StorageLocation implements StorageLocationInterface{
     private String designation;
     private final int rowCount = 12;
     private final int unitsPerUnitCount = 20;
+    private StorageUnit[][] storageUnitList = new StorageUnit[rowCount][unitsPerUnitCount];
     private Customer[] customerList = new Customer[100];
-
 
     public StorageLocation(String designation) {
         this.designation = designation;
     }
 
-    @Override public String getDesignation() {
-        return null;
+    public String getDesignation() {
+        return this.designation;
     }
 
-    @Override public int getRowCount() {
+    public int getRowCount() {
         return rowCount;
     }
 
-    @Override public int getUnitsPerRowCount() {
+    public int getUnitsPerRowCount() {
         return unitsPerUnitCount;
     }
 
-    @Override public StorageUnit getStorageUnit(int rowIdx, int spaceIdx) {
+    public StorageUnit getStorageUnit(int rowIdx, int spaceIdx) {
+        return storageUnitList[rowIdx][spaceIdx];
+    }
+
+    public Customer getCustomer(int custIdx) {
         return null;
     }
 
-    @Override public Customer getCustomer(int custIdx) {
-        return null;
-    }
-
-    @Override public int getCustomerCount() {
+    public int getCustomerCount() {
         return 0;
     }
 
-    @Override public int addCustomer(Customer customer) {
+    public int addCustomer(Customer customer) {
         return 0;
     }
 
-    @Override public StorageUnit[] getCustomerUnits(Customer customer) {
+    public StorageUnit[] getCustomerUnits(Customer customer) {
         return new StorageUnit[0];
     }
 
-    @Override public StorageUnit[] getEmptyUnits() {
+    public StorageUnit[] getEmptyUnits() {
         return new StorageUnit[0];
     }
 
-    @Override public StorageUnit[] getEmptyUnits(StorageUnit.UnitType unitType) {
+    public StorageUnit[] getEmptyUnits(StorageUnit.UnitType unitType) {
         return new StorageUnit[0];
     }
 
-    @Override public double chargeMonthlyRent() {
+    public double chargeMonthlyRent() {
         return 0;
     }
 }
