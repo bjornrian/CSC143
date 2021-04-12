@@ -1,6 +1,6 @@
 package stanleyStorage;
 
-public class Customer implements CustomerInterface{
+public class Customer implements CustomerInterface {
     private String name;
     private String phone;
     private double balance;

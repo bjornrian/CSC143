@@ -24,7 +24,7 @@ public class StorageLocationTest {
 
     @Test public void testGetStorageUnitByIndex() {
         StorageLocation spokane = new StorageLocation("WA23Spokane");
-        spokane.
+//        spokane.
     }
 
     @Test public void testAddCustomerToList() {
