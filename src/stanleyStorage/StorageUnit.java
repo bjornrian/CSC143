@@ -1,27 +1,21 @@
 package stanleyStorage;
 
-public class StorageUnit {
+import java.time.LocalDate;
 
+public class StorageUnit implements StorageUnitInterface {
     private int width;
     private int length;
     private int height;
-    private CustConf customer;
-    private double price;
-    private Enum<unitType> unitType;
-    private String startDate;
-    enum unitType {
-        STANDARD, HUMIDITY_CHECKED, TEMPERATURE_CHECKED
-    }
+    public Customer customer;
+    public LocalDate rentalStart;
+    public double price;
+    public UnitType unitType;
 
-    public StorageUnit(int width, int length, int height, CustConf customer,
-            double price, Enum<unitType> unitType, String startDate) {
+    public StorageUnit(int width, int length, int height, UnitType unitType) {
         this.width = width;
-        this.length = width;
+        this.length = length;
         this.height = height;
-        this.customer = customer;
-        this.price = price;
         this.unitType = unitType;
-        this.startDate = startDate;
     }
 
     public int getWidth() {
@@ -36,29 +30,33 @@ public class StorageUnit {
         return height;
     }
 
-    public CustConf getCustomer() {
-        return customer;
+    public StorageUnitInterface.UnitType getType() {
+        return null;
     }
 
     public double getPrice() {
         return price;
     }
 
-    public Enum<StorageUnit.unitType> getUnitType() {
-        return unitType;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public String getStartDate() {
-        return startDate;
+    public LocalDate getRentalStart() {
+        return rentalStart;
     }
 
-    public void setNewCustomer(CustConf customer, String startDate) {
-        this.customer = customer;
-        this.startDate = startDate;
+    public boolean rent(Customer customer, LocalDate rentalStart, double price) {
+        return false;
     }
 
-    public void releaseUnit() {
-        this.customer = null;
-        this.startDate = null;
+    public boolean release() {
+        return false;
+    }
+
+    public String toString() {
+        return "StorageUnit{" + "width=" + width + ", length=" + length + ", height=" + height
+                + ", customer=" + customer + ", rentalStart=" + rentalStart + ", price=" + price
+                + ", unitType=" + unitType + '}';
     }
 }

@@ -1,4 +1,4 @@
-package labs.BankDemo;
+package labs.bankDemo;
 
 public class BankAccount {
     private int userId;

@@ -1,15 +1,15 @@
-package stanleyStorage;
+package labs.stanleyOld;
 
-public class CustConf {
+public class CustomerOld {
 
     private String name;
     private String phone;
     private double balance;
 
-    public CustConf(String name, String phone, double balance) {
+    public CustomerOld(String name, String phone, double balance) {
         this.name = verifyString(name);
         this.phone = verifyPhone(phone);
-        this.balance = balance;
+        this.balance = verifyBalance(balance);
     }
 
     public String getName() {
@@ -32,11 +32,11 @@ public class CustConf {
         return balance;
     }
 
-    public void chargeCust(int amount) {
+    public void chargeCust(double amount) {
         this.balance += amount;
     }
 
-    public void creditCust(int amount) {
+    public void creditCust(double amount) {
         this.balance -= amount;
     }
 
@@ -54,5 +54,10 @@ public class CustConf {
         return phone;
     }
 
-
+    private double verifyBalance(double balance) {
+        if (balance < 0) {
+            throw new IllegalArgumentException("Error: Balance can't have a negative value.");
+        }
+        return balance;
+    }
 }
