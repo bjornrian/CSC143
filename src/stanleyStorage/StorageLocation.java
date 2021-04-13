@@ -33,7 +33,7 @@ public class StorageLocation implements StorageLocationInterface{
     }
 
     public Customer getCustomer(int custIdx) {
-        return null;
+        return customerList[custIdx];
     }
 
     public int getCustomerCount() {
@@ -53,7 +53,23 @@ public class StorageLocation implements StorageLocationInterface{
     }
 
     public StorageUnit[] getCustomerUnits(Customer customer) {
-        return new StorageUnit[0];
+        StorageUnit[] custUnitsInitial = new StorageUnit[100];
+        int custUnitsIdx = 0;
+        for(int row_idx = 0; row_idx < rowCount; row_idx++) {
+            for(int col_idx = 0; col_idx < unitsPerUnitCount; col_idx++) {
+                if(storageUnitList[row_idx][col_idx].getCustomer().getName() != null
+                        && storageUnitList[row_idx][col_idx].getCustomer().getName().equals(customer.getName())
+                && storageUnitList[row_idx][col_idx].getCustomer().getPhone().equals(customer.getPhone())) {
+                    custUnitsInitial[custUnitsIdx] = storageUnitList[row_idx][col_idx];
+                    custUnitsIdx++;
+                }
+            }
+        }
+        StorageUnit[] custUnitsShortened = new StorageUnit[custUnitsIdx];
+        for(int idx = 0; idx < custUnitsIdx; idx++) {
+            custUnitsShortened[idx]= custUnitsInitial[idx];
+        }
+        return custUnitsShortened;
     }
 
     public StorageUnit[] getEmptyUnits() {

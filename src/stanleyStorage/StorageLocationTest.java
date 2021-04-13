@@ -3,6 +3,7 @@ package stanleyStorage;
 import org.junit.Test;
 
 import java.io.*;
+import java.time.LocalDate;
 
 import static org.junit.Assert.*;
 
@@ -48,8 +49,8 @@ public class StorageLocationTest {
     @Test
     public void testAddCustomerToList() {
         StorageLocation issaquah = new StorageLocation("WA23Issaquah");
-        issaquah.addCustomer(new Customer("Bob", "1234567890"));
-        assertEquals("Bob", buildStorageLocation().getCustomer(0).getName());
+        issaquah.addCustomer(new Customer("Ben", "1234567890"));
+        assertEquals("Ben", issaquah.getCustomer(0).getName());
     }
 
     @Test
@@ -58,8 +59,7 @@ public class StorageLocationTest {
         Customer testCust = new Customer("Bob", "1234567890");
         issaquah.addCustomer(testCust);
         issaquah.addCustomer(testCust);
-        assertEquals("Bob", buildStorageLocation().getCustomer(0).getName());
-        assertEquals("1234567890", buildStorageLocation().getCustomer(0).getPhone());
+        assertEquals("Bob", issaquah.getCustomer(0).getName());
     }
 
     @Test
@@ -72,7 +72,19 @@ public class StorageLocationTest {
 
     @Test
     public void testGetStorageUnitsForCustomer() {
+        StorageLocation issaquah = new StorageLocation("WA23Issaquah");
+        Customer bob = new Customer("Bob", "1234567890");
+        issaquah.addCustomer(bob);
+        Customer ben = new Customer("Ben", "1234562332");
+        issaquah.addCustomer(ben);
+        issaquah.setStorageUnit(new StorageUnit(4, 4, 4, StorageUnitInterface.UnitType.STANDARD), 0, 1);
+        issaquah.setStorageUnit(new StorageUnit(12, 12, 8, StorageUnitInterface.UnitType.HUMIDITY), 2, 2);
+        issaquah.setStorageUnit(new StorageUnit(8, 8, 16, StorageUnitInterface.UnitType.TEMPERATURE), 3, 4);
 
+        issaquah.getStorageUnit(0, 1).rent(bob, LocalDate.now(), 100);
+        issaquah.getStorageUnit(2, 2).rent(bob, LocalDate.now(), 100);
+        issaquah.getStorageUnit(3, 4).rent(ben, LocalDate.now(), 103);
+        assertEquals(2, issaquah.getCustomerUnits(issaquah.getCustomer(0)).length);
     }
 
     @Test

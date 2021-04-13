@@ -40,4 +40,13 @@ public class Customer implements CustomerInterface {
         this.balance -= amount;
         return this.balance;
     }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "name='" + name + '\'' +
+                ", phone='" + phone + '\'' +
+                ", balance=" + balance +
+                '}';
+    }
 }
