@@ -6,9 +6,14 @@ public class StorageLocation implements StorageLocationInterface{
     private final int unitsPerUnitCount = 20;
     private StorageUnit[][] storageUnitList = new StorageUnit[rowCount][unitsPerUnitCount];
     private Customer[] customerList = new Customer[100];
+    private int custIdx = 0;
 
     public StorageLocation(String designation) {
         this.designation = designation;
+    }
+
+    public void setStorageUnit(StorageUnit oneUnit, int row_idx, int col_idx) {
+        storageUnitList[row_idx][col_idx] = oneUnit;
     }
 
     public String getDesignation() {
@@ -32,11 +37,19 @@ public class StorageLocation implements StorageLocationInterface{
     }
 
     public int getCustomerCount() {
-        return 0;
+        int custCount = 0;
+        for(int idx = 0; idx < customerList.length; idx++) {
+            if(customerList[idx] != null) {
+                custCount++;
+            }
+        }
+        return custCount;
     }
 
     public int addCustomer(Customer customer) {
-        return 0;
+        customerList[custIdx] = customer;
+        custIdx += 1;
+        return 1;
     }
 
     public StorageUnit[] getCustomerUnits(Customer customer) {
