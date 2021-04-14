@@ -1,10 +1,21 @@
 package stanleyStorage;
 
+/**
+ * Represents a customer that rents a storage unit.
+ * Contains personal data such as name and phone number.
+ * This class keeps track of the balance that the customer owes.
+ */
 public class Customer implements CustomerInterface {
     private String name;
     private String phone;
     private double balance;
 
+    /**
+     * Constructor
+     *
+     * @param name the customer's name
+     * @param phone the customer's phone number
+     */
     public Customer(String name, String phone) {
         verifyString(name);
         verifyString(phone);
