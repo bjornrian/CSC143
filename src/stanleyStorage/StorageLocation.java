@@ -1,10 +1,11 @@
 package stanleyStorage;
 
 public class StorageLocation implements StorageLocationInterface{
+    public static final int ROW_COUNT = 12;
+    public static final int UNITS_PER_ROW_COUNT = 20;
+
     private String designation;
-    private final int rowCount = 12;
-    private final int unitsPerUnitCount = 20;
-    private StorageUnit[][] storageUnitList = new StorageUnit[rowCount][unitsPerUnitCount];
+    private StorageUnit[][] storageUnitList = new StorageUnit[ROW_COUNT][UNITS_PER_ROW_COUNT];
     private Customer[] customerList = new Customer[100];
     private int custIdx = 0;
 
@@ -21,11 +22,11 @@ public class StorageLocation implements StorageLocationInterface{
     }
 
     public int getRowCount() {
-        return rowCount;
+        return ROW_COUNT;
     }
 
     public int getUnitsPerRowCount() {
-        return unitsPerUnitCount;
+        return UNITS_PER_ROW_COUNT;
     }
 
     public StorageUnit getStorageUnit(int rowIdx, int spaceIdx) {
@@ -53,25 +54,34 @@ public class StorageLocation implements StorageLocationInterface{
     }
 
     public StorageUnit[] getCustomerUnits(Customer customer) {
-        StorageUnit[] custUnitsInitial = new StorageUnit[100];
-        int custUnitsIdx = 0;
-        for(int row_idx = 0; row_idx < rowCount; row_idx++) {
-            for(int col_idx = 0; col_idx < unitsPerUnitCount; col_idx++) {
-                if(storageUnitList[row_idx][col_idx].getCustomer().getName() != null
-                        && storageUnitList[row_idx][col_idx].getCustomer().getName().equals(customer.getName())
-                && storageUnitList[row_idx][col_idx].getCustomer().getPhone().equals(customer.getPhone())) {
-                    custUnitsInitial[custUnitsIdx] = storageUnitList[row_idx][col_idx];
-                    custUnitsIdx++;
+        StorageUnit[] initialListOfUnits = new StorageUnit[ROW_COUNT * UNITS_PER_ROW_COUNT];
+        int numberOfUnits = 0;
+        for(int row_idx = 0; row_idx < ROW_COUNT; row_idx++) {
+            for(int col_idx = 0; col_idx < UNITS_PER_ROW_COUNT; col_idx++) {
+                StorageUnit storageUnit = storageUnitList[row_idx][col_idx];
+                if(null != storageUnit) {
+                    Customer customerFromList = storageUnit.getCustomer();
+                    if(customerFromList != null && customerFromList.getName().equals(customer.getName())
+                            && customerFromList.getPhone().equals(customer.getPhone())) {
+                        initialListOfUnits[numberOfUnits] = storageUnit;
+                        numberOfUnits++;
+                    }
                 }
             }
         }
-        StorageUnit[] custUnitsShortened = new StorageUnit[custUnitsIdx];
-        for(int idx = 0; idx < custUnitsIdx; idx++) {
-            custUnitsShortened[idx]= custUnitsInitial[idx];
+
+        StorageUnit[] shortListOfUnits = new StorageUnit[numberOfUnits];
+        for(int idx = 0; idx < numberOfUnits; idx++) {
+            shortListOfUnits[idx]= initialListOfUnits[idx];
         }
-        return custUnitsShortened;
+
+        return shortListOfUnits;
     }
 
+    /**
+     *
+     * @return
+     */
     public StorageUnit[] getEmptyUnits() {
         return new StorageUnit[0];
     }
