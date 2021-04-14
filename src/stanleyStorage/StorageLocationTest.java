@@ -115,12 +115,58 @@ public class StorageLocationTest {
 
     @Test
     public void testGetAllEmptyStorageUnitsByType() {
+        StorageLocation issaquah = new StorageLocation("WA23Issaquah");
+        Customer bob = new Customer("Bob", "1234567890");
+        issaquah.addCustomer(bob);
+        Customer ben = new Customer("Ben", "1234562332");
+        issaquah.addCustomer(ben);
+        issaquah.setStorageUnit(new StorageUnit(4, 4, 4, StorageUnitInterface.UnitType.TEMPERATURE), 0, 1);
+        issaquah.setStorageUnit(new StorageUnit(12, 12, 8, StorageUnitInterface.UnitType.HUMIDITY), 2, 2);
+        issaquah.setStorageUnit(new StorageUnit(8, 8, 16, StorageUnitInterface.UnitType.TEMPERATURE), 3, 4);
 
+        issaquah.getStorageUnit(0, 1).rent(bob, LocalDate.now(), 100);
+        issaquah.getStorageUnit(2, 2).rent(bob, LocalDate.now(), 100);
+        issaquah.getStorageUnit(3, 4).rent(ben, LocalDate.now(), 103);
+
+        assertEquals(0, issaquah.getEmptyUnits(StorageUnitInterface.UnitType.TEMPERATURE).length);
+
+        issaquah.getStorageUnit(0, 1).release();
+        issaquah.getStorageUnit(2, 2).release();
+        issaquah.getStorageUnit(3, 4).release();
+
+        assertEquals(2, issaquah.getEmptyUnits(StorageUnitInterface.UnitType.TEMPERATURE).length);
+        assertEquals(1, issaquah.getEmptyUnits(StorageUnitInterface.UnitType.HUMIDITY).length);
     }
 
     @Test
     public void testChargeMonthlyRent() {
+        StorageLocation issaquah = new StorageLocation("WA23Issaquah");
+        Customer bob = new Customer("Bob", "1234567890");
+        issaquah.addCustomer(bob);
+        Customer ben = new Customer("Ben", "1234562332");
+        issaquah.addCustomer(ben);
+        Customer billyJoe = new Customer("Billy Joe", "1092813232");
+        issaquah.addCustomer(billyJoe);
+        issaquah.setStorageUnit(new StorageUnit(4, 4, 4, StorageUnitInterface.UnitType.TEMPERATURE), 0, 1);
+        issaquah.setStorageUnit(new StorageUnit(12, 12, 8, StorageUnitInterface.UnitType.HUMIDITY), 2, 2);
+        issaquah.setStorageUnit(new StorageUnit(8, 8, 16, StorageUnitInterface.UnitType.TEMPERATURE), 3, 4);
+        issaquah.setStorageUnit(new StorageUnit(8, 8, 16, StorageUnitInterface.UnitType.STANDARD), 6, 1);
 
+        issaquah.getStorageUnit(0, 1).rent(bob, LocalDate.now(), 100);
+        issaquah.getStorageUnit(2, 2).rent(bob, LocalDate.now(), 100);
+        issaquah.getStorageUnit(3, 4).rent(ben, LocalDate.now(), 103);
+        issaquah.getStorageUnit(6, 1).rent(billyJoe, LocalDate.now(), 1030000);
+
+        issaquah.chargeMonthlyRent();
+
+        assertEquals(103, issaquah.getCustomer(1).getBalance(), 0.0001);
+        assertEquals(200, issaquah.getCustomer(0).getBalance(), 0.0001);
+        assertEquals(1030000, issaquah.getCustomer(2).getBalance(), 0.0001);
+
+        issaquah.chargeMonthlyRent();
+
+        assertEquals(206, issaquah.getCustomer(1).getBalance(), 0.0001);
+        assertEquals(400, issaquah.getCustomer(0).getBalance(), 0.0001);
+        assertEquals(2060000, issaquah.getCustomer(2).getBalance(), 0.0001);
     }
-
 }

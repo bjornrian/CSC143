@@ -11,6 +11,15 @@ public class StorageLocation implements StorageLocationInterface{
 
     public StorageLocation(String designation) {
         this.designation = designation;
+        initializeEmptyUnits();
+    }
+
+    private void initializeEmptyUnits() {
+        for(int row_idx = 0; row_idx < ROW_COUNT; row_idx++) {
+            for(int col_idx = 0; col_idx < UNITS_PER_ROW_COUNT; col_idx++) {
+                storageUnitList[row_idx][col_idx] = new StorageUnit(4, 4, 4, StorageUnitInterface.UnitType.STANDARD);
+            }
+        }
     }
 
     public void setStorageUnit(StorageUnit oneUnit, int row_idx, int col_idx) {
@@ -79,18 +88,65 @@ public class StorageLocation implements StorageLocationInterface{
     }
 
     /**
-     *
-     * @return
+     * @return all non-rented units
      */
     public StorageUnit[] getEmptyUnits() {
-        return new StorageUnit[0];
+        StorageUnit[] initialListOfUnits = new StorageUnit[ROW_COUNT * UNITS_PER_ROW_COUNT];
+        int numberOfUnits = 0;
+        for(int row_idx = 0; row_idx < ROW_COUNT; row_idx++) {
+            for(int col_idx = 0; col_idx < UNITS_PER_ROW_COUNT; col_idx++) {
+                StorageUnit storageUnit = storageUnitList[row_idx][col_idx];
+                if(null != storageUnit) {
+                    if(storageUnit.getCustomer() == null) {
+                        initialListOfUnits[numberOfUnits] = storageUnit;
+                        numberOfUnits++;
+                    }
+                }
+            }
+        }
+
+        StorageUnit[] shortListOfUnits = new StorageUnit[numberOfUnits];
+        for(int idx = 0; idx < numberOfUnits; idx++) {
+            shortListOfUnits[idx]= initialListOfUnits[idx];
+        }
+
+        return shortListOfUnits;
     }
 
     public StorageUnit[] getEmptyUnits(StorageUnit.UnitType unitType) {
-        return new StorageUnit[0];
+        StorageUnit[] initialListOfUnits = new StorageUnit[ROW_COUNT * UNITS_PER_ROW_COUNT];
+        int numberOfUnits = 0;
+        for(int row_idx = 0; row_idx < ROW_COUNT; row_idx++) {
+            for(int col_idx = 0; col_idx < UNITS_PER_ROW_COUNT; col_idx++) {
+                StorageUnit storageUnit = storageUnitList[row_idx][col_idx];
+                if(null != storageUnit) {
+                    if(storageUnit.getCustomer() == null && storageUnit.getType() == unitType) {
+                        initialListOfUnits[numberOfUnits] = storageUnit;
+                        numberOfUnits++;
+                    }
+                }
+            }
+        }
+
+        StorageUnit[] shortListOfUnits = new StorageUnit[numberOfUnits];
+        for(int idx = 0; idx < numberOfUnits; idx++) {
+            shortListOfUnits[idx]= initialListOfUnits[idx];
+        }
+
+        return shortListOfUnits;
     }
 
     public double chargeMonthlyRent() {
+        for(int row_idx = 0; row_idx < ROW_COUNT; row_idx++) {
+            for(int col_idx = 0; col_idx < UNITS_PER_ROW_COUNT; col_idx++) {
+                StorageUnit storageUnit = storageUnitList[row_idx][col_idx];
+                if(null != storageUnit) {
+                    if(storageUnit.getCustomer() != null) {
+                        storageUnit.getCustomer().charge(storageUnit.getPrice());
+                    }
+                }
+            }
+        }
         return 0;
     }
 }

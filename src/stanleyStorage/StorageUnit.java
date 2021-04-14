@@ -6,11 +6,11 @@ public class StorageUnit implements StorageUnitInterface {
     private int width;
     private int length;
     private int height;
-    public Customer customer;
-    public LocalDate rentalStart;
-    public double price;
-    public double standardPrice = 100;
-    public UnitType unitType;
+    private Customer customer;
+    private LocalDate rentalStart;
+    private double price;
+    private double standardPrice = 100;
+    private UnitType unitType;
 
     public StorageUnit(int width, int length, int height, UnitType unitType) {
         this.width = width;
