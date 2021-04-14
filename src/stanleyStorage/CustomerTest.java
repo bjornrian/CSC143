@@ -1,6 +1,7 @@
 package stanleyStorage;
 
 import static org.junit.Assert.*;
+
 import org.junit.Test;
 
 /**
@@ -10,9 +11,6 @@ import org.junit.Test;
  * Charge the customer a specified amount, or credit them a specified amount
  */
 public class CustomerTest {
-    private Customer getCustomer() {
-        return new Customer("Bob", "2341231234");
-    }
 
     @Test
     public void testGetAttributes() {
@@ -44,4 +42,13 @@ public class CustomerTest {
         assertEquals(-200, myCust.getBalance(), 0.0001);
     }
 
+    private Customer getCustomer() {
+        return new Customer("Bob", "2341231234");
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void testVerifyAmount() {
+        Customer testCustomer = new Customer("Bob", "10232842");
+        testCustomer.credit(-1);
+    }
 }

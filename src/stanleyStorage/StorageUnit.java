@@ -13,10 +13,19 @@ public class StorageUnit implements StorageUnitInterface {
     private UnitType unitType;
 
     public StorageUnit(int width, int length, int height, UnitType unitType) {
+        verifyDimension(width, 4);
+        verifyDimension(length, 4);
+        verifyDimension(height, 2);
         this.width = width;
         this.length = length;
         this.height = height;
         this.unitType = unitType;
+    }
+
+    private void verifyDimension(int distance, int divisor) {
+        if(distance % divisor != 0 || distance < 1) {
+            throw new IllegalArgumentException("Error: distance must be greater than zero and divisible by " + divisor);
+        }
     }
 
     public int getWidth() {

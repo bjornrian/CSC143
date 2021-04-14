@@ -1,6 +1,9 @@
 package stanleyStorage;
+
 import org.junit.Test;
+
 import java.time.LocalDate;
+
 import static org.junit.Assert.*;
 
 /**
@@ -13,10 +16,6 @@ import static org.junit.Assert.*;
  * Release the unit (make it “unrented”)
  */
 public class StorageUnitTest {
-    private StorageUnit getStorageUnit() {
-        return new StorageUnit(4, 8, 6, StorageUnitInterface.UnitType.STANDARD);
-    }
-
     @Test
     public void testGetAttributes() {
         StorageUnit myStorage = getStorageUnit();
@@ -32,7 +31,7 @@ public class StorageUnitTest {
     @Test
     public void testGetStandardPrice() {
         StorageUnit myStorage = getStorageUnit();
-        assertEquals(100,myStorage.getPrice(), 0.0001);
+        assertEquals(100, myStorage.getPrice(), 0.0001);
     }
 
     /**
@@ -70,4 +69,12 @@ public class StorageUnitTest {
         assertEquals(100, myStorage.getPrice(), 0.0001);
     }
 
+    private StorageUnit getStorageUnit() {
+        return new StorageUnit(4, 8, 6, StorageUnitInterface.UnitType.STANDARD);
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void testVerifyDimension() {
+        StorageUnit testUnit = new StorageUnit(1, 1, 1, StorageUnitInterface.UnitType.STANDARD);
+    }
 }

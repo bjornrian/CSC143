@@ -128,14 +128,14 @@ public class StorageLocationTest {
         issaquah.getStorageUnit(2, 2).rent(bob, LocalDate.now(), 100);
         issaquah.getStorageUnit(3, 4).rent(ben, LocalDate.now(), 103);
 
-        assertEquals(0, issaquah.getEmptyUnits(StorageUnitInterface.UnitType.TEMPERATURE).length);
+        assertEquals(144, issaquah.getEmptyUnits(StorageUnitInterface.UnitType.TEMPERATURE).length);
 
         issaquah.getStorageUnit(0, 1).release();
         issaquah.getStorageUnit(2, 2).release();
         issaquah.getStorageUnit(3, 4).release();
 
-        assertEquals(2, issaquah.getEmptyUnits(StorageUnitInterface.UnitType.TEMPERATURE).length);
-        assertEquals(1, issaquah.getEmptyUnits(StorageUnitInterface.UnitType.HUMIDITY).length);
+        assertEquals(146, issaquah.getEmptyUnits(StorageUnitInterface.UnitType.TEMPERATURE).length);
+        assertEquals(48, issaquah.getEmptyUnits(StorageUnitInterface.UnitType.HUMIDITY).length);
     }
 
     @Test
@@ -168,5 +168,10 @@ public class StorageLocationTest {
         assertEquals(206, issaquah.getCustomer(1).getBalance(), 0.0001);
         assertEquals(400, issaquah.getCustomer(0).getBalance(), 0.0001);
         assertEquals(2060000, issaquah.getCustomer(2).getBalance(), 0.0001);
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void testVerifyString() {
+        StorageLocation testLocation = new StorageLocation("");
     }
 }

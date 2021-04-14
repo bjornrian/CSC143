@@ -1,24 +1,29 @@
 package stanleyStorage;
 
-import labs.stanleyOld.StorageLocationOld;
-
 import java.time.LocalDate;
-import java.util.Arrays;
-
-import static org.junit.Assert.assertEquals;
 
 public class Main {
     public static void main(String[] args) {
-        StorageLocation issaquah = new StorageLocation("WA23Issaquah");
+        //We have a new storage location in Issaquah
+        StorageLocationInterface issaquah = new StorageLocation("WA23Issaquah");
+        //A customer named Bob walks in
         Customer bob = new Customer("Bob", "1234567890");
-        Customer ben = new Customer("Ben", "1234562332");
-        issaquah.setStorageUnit(new StorageUnit(4, 4, 4, StorageUnitInterface.UnitType.STANDARD), 0, 1);
-        issaquah.setStorageUnit(new StorageUnit(12, 12, 8, StorageUnitInterface.UnitType.HUMIDITY), 2, 2);
-        issaquah.setStorageUnit(new StorageUnit(8, 8, 16, StorageUnitInterface.UnitType.TEMPERATURE), 3, 4);
-
-        issaquah.getStorageUnit(0, 1).rent(bob, LocalDate.now(), 100);
-        issaquah.getStorageUnit(2, 2).rent(bob, LocalDate.now(), 100);
-        issaquah.getStorageUnit(3, 4).rent(ben, LocalDate.now(), 103);
-        System.out.println(Arrays.toString(issaquah.getCustomerUnits(bob)));
+        //Ben wants to rent a temperature controlled unit
+        StorageUnit[] emptyUnits = issaquah.getEmptyUnits(StorageUnitInterface.UnitType.TEMPERATURE);
+        int numberOfTempControlledUnits = emptyUnits.length;
+        System.out.println("numberOfTempControlledUnits = " + numberOfTempControlledUnits);
+        //We found some available. Let's see what they cost
+        StorageUnit emptyUnit = emptyUnits[0];
+        double price = emptyUnit.getPrice();
+        System.out.println("price = " + price);
+        //Bob says he has a coupon for $10 off
+        emptyUnit.rent(bob, LocalDate.now(), price - 10);
+        String bobStatusBeforeChargingRent = issaquah.getCustomerUnits(bob)[0].getCustomer().toString();
+        System.out.println("bobStatusBeforeChargingRent = " + bobStatusBeforeChargingRent);
+        //Charge monthly rent
+        issaquah.chargeMonthlyRent();
+        //How much is Bob's new balance?
+        String bobStatusAfterChargingRent = issaquah.getCustomerUnits(bob)[0].getCustomer().toString();
+        System.out.println("bobStatusAfterChargingRent = " + bobStatusAfterChargingRent);
     }
 }
