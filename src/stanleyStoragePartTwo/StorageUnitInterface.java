@@ -1,4 +1,4 @@
-package stanleyStorage;
+package stanleyStoragePartTwo;
 
 import java.time.LocalDate;
 

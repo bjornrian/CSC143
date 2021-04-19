@@ -1,4 +1,4 @@
-package stanleyStorage;
+package stanleyStoragePartTwo;
 
 import java.time.LocalDate;
 
@@ -48,7 +48,7 @@ public class StorageUnit implements StorageUnitInterface {
         return height;
     }
 
-    public StorageUnitInterface.UnitType getType() {
+    public UnitType getType() {
         return this.unitType;
     }
 
