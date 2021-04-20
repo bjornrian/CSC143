@@ -8,32 +8,27 @@ import java.time.LocalDate;
  * Each unit has a standard price, and an actual price.
  * Storage units come in different types, such as temperature controlled, humidity controlled, and standard.
  */
-public class StorageUnit implements StorageUnitInterface {
+public abstract class StorageUnit {
     private int width;
     private int length;
     private int height;
     private Customer customer;
     private LocalDate rentalStart;
-    private double price;
-    private double standardPrice = 100;
-    private UnitType unitType;
+    private double basePrice = 100;
 
     /**
      * Constructor
-     *
-     * @param width the width of the storage unit
+     *  @param width the width of the storage unit
      * @param length the length of the storage unit
      * @param height the height of the storage unit
-     * @param unitType the type of storage unit
      */
-    public StorageUnit(int width, int length, int height, UnitType unitType) {
+    public StorageUnit(int width, int length, int height) {
         verifyDimension(width, 4);
         verifyDimension(length, 4);
         verifyDimension(height, 2);
         this.width = width;
         this.length = length;
         this.height = height;
-        this.unitType = unitType;
     }
 
     public int getWidth() {
@@ -48,21 +43,12 @@ public class StorageUnit implements StorageUnitInterface {
         return height;
     }
 
-    public StorageUnitInterface.UnitType getType() {
-        return this.unitType;
-    }
-
     /**
      * Retrieves the monthly price of the storage unit, in USD
      * @return standard price, or special price in the customer's contract
      */
     public double getPrice() {
-        if(null == customer) {
-            return standardPrice;
-        }
-        else {
-            return price;
-        }
+        return basePrice;
     }
 
     public Customer getCustomer() {
@@ -82,13 +68,11 @@ public class StorageUnit implements StorageUnitInterface {
      *
      * @param customer
      * @param rentalStart
-     * @param price
      * @return
      */
-    public boolean rent(Customer customer, LocalDate rentalStart, double price) {
+    public boolean rent(Customer customer, LocalDate rentalStart) {
         this.customer = customer;
         this.rentalStart = rentalStart;
-        this.price = price;
         return true;
     }
 
@@ -105,8 +89,8 @@ public class StorageUnit implements StorageUnitInterface {
 
     public String toString() {
         return "StorageUnit{" + "width=" + width + ", length=" + length + ", height=" + height
-                + ", customer=" + customer + ", rentalStart=" + rentalStart + ", price=" + price
-                + ", unitType=" + unitType + '}';
+                + ", customer=" + customer + ", rentalStart=" + rentalStart + ", price=" + basePrice
+                + ", unitType=" +'}';
     }
 
     private void verifyDimension(int sideLength, int divisor) {

@@ -5,7 +5,7 @@ package stanleyStorage;
  * Contains personal data such as name and phone number.
  * This class keeps track of the balance that the customer owes.
  */
-public class Customer implements CustomerInterface {
+public class Customer {
     private String name;
     private String phone;
     private double balance;
