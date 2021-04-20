@@ -120,7 +120,7 @@ public class StorageLocationTest {
     @Test
     public void testGetAllEmptyStorageUnitsByType() {
         StorageLocation issaquah = new StorageLocation("WA23Issaquah");
-        issaquah.getEmptyUnits(HumidityControlledUnit.class);
+        assertEquals(24, issaquah.getEmptyUnits(HumidityControlledUnit.class).length);
 
 
 

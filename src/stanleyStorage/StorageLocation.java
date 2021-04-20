@@ -27,12 +27,12 @@ public class StorageLocation {
                 storageUnitList[rowIdx][colIdx] = new StandardUnit(8, 8, 8);
             }
         }
-        for(int rowIdx = 0; rowIdx < ROW_COUNT_HUMIDITY; rowIdx++) {
+        for(int rowIdx = 7; rowIdx < ROW_COUNT_HUMIDITY + 7; rowIdx++) {
             for(int colIdx = 0; colIdx < UNITS_PER_ROW_COUNT_HUMIDITY; colIdx++) {
                 storageUnitList[rowIdx][colIdx] = new HumidityControlledUnit(8, 8, 8);
             }
         }
-        for(int rowIdx = 0; rowIdx < ROW_COUNT_TEMPERATURE; rowIdx++) {
+        for(int rowIdx = 10; rowIdx < ROW_COUNT_TEMPERATURE + 10; rowIdx++) {
             for(int colIdx = 0; colIdx < UNITS_PER_ROW_COUNT_TEMPERATURE; colIdx++) {
                 storageUnitList[rowIdx][colIdx] = new TemperatureControlledUnit(8, 8, 8);
             }
@@ -135,7 +135,7 @@ public class StorageLocation {
     }
 
     public StorageUnit[] getEmptyUnits(Class<? extends StorageUnit> soughtClass) {
-        StorageUnit[] initialListOfUnits = new StorageUnit[ROW_COUNT]; //todo find suitable number
+        StorageUnit[] initialListOfUnits = new StorageUnit[100]; //todo find suitable number
         int numberOfUnits = 0;
         if(soughtClass == StandardUnit.class) {
             for(int rowIdx = 0; rowIdx < ROW_COUNT_STANDARD; rowIdx++) {
