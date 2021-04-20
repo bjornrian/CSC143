@@ -2,6 +2,7 @@ package stanleyStorage.tests;
 
 import org.junit.Test;
 import stanleyStorage.Customer;
+import stanleyStorage.HumidityControlledUnit;
 import stanleyStorage.StorageLocation;
 import stanleyStorage.StorageUnit;
 
@@ -119,23 +120,29 @@ public class StorageLocationTest {
     @Test
     public void testGetAllEmptyStorageUnitsByType() {
         StorageLocation issaquah = new StorageLocation("WA23Issaquah");
-        Customer bob = new Customer("Bob", "1234567890");
-        issaquah.addCustomer(bob);
-        Customer ben = new Customer("Ben", "1234562332");
-        issaquah.addCustomer(ben);
+        issaquah.getEmptyUnits(HumidityControlledUnit.class);
+
+
+
+
+
+//        Customer bob = new Customer("Bob", "1234567890");
+//        issaquah.addCustomer(bob);
+//        Customer ben = new Customer("Ben", "1234562332");
+//        issaquah.addCustomer(ben);
 //        issaquah.setStorageUnit(new StorageUnit(4, 4, 4), 0, 1);
 //        issaquah.setStorageUnit(new StorageUnit(12, 12, 8), 2, 2);
 //        issaquah.setStorageUnit(new StorageUnit(8, 8, 16), 3, 4);
 
-        issaquah.getStorageUnit(0, 1).rent(bob, LocalDate.now());
-        issaquah.getStorageUnit(2, 2).rent(bob, LocalDate.now());
-        issaquah.getStorageUnit(3, 4).rent(ben, LocalDate.now());
+//        issaquah.getStorageUnit(0, 1).rent(bob, LocalDate.now());
+//        issaquah.getStorageUnit(2, 2).rent(bob, LocalDate.now());
+//        issaquah.getStorageUnit(3, 4).rent(ben, LocalDate.now());
 
 //        assertEquals(144, issaquah.getEmptyUnits(StorageUnitInterface.UnitType.TEMPERATURE).length);
 
-        issaquah.getStorageUnit(0, 1).release();
-        issaquah.getStorageUnit(2, 2).release();
-        issaquah.getStorageUnit(3, 4).release();
+//        issaquah.getStorageUnit(0, 1).release();
+//        issaquah.getStorageUnit(2, 2).release();
+//        issaquah.getStorageUnit(3, 4).release();
 
 //        assertEquals(146, issaquah.getEmptyUnits(StorageUnitInterface.UnitType.TEMPERATURE).length);
 //        assertEquals(48, issaquah.getEmptyUnits(StorageUnitInterface.UnitType.HUMIDITY).length);

@@ -13,6 +13,7 @@ public class StorageLocation {
     private StorageUnit[][] storageUnitList = new StorageUnit[ROW_COUNT][];
     private Customer[] customerList = new Customer[100];
     private int customerIdx = 0;
+    private double basePrice;
 
     public StorageLocation(String designation) {
         verifyString(designation);
@@ -27,12 +28,12 @@ public class StorageLocation {
             }
         }
         for(int rowIdx = 0; rowIdx < ROW_COUNT_HUMIDITY; rowIdx++) {
-            for(int colIdx = 0; colIdx < UNITS_PER_ROW_COUNT_STANDARD; colIdx++) {
+            for(int colIdx = 0; colIdx < UNITS_PER_ROW_COUNT_HUMIDITY; colIdx++) {
                 storageUnitList[rowIdx][colIdx] = new HumidityControlledUnit(8, 8, 8);
             }
         }
         for(int rowIdx = 0; rowIdx < ROW_COUNT_TEMPERATURE; rowIdx++) {
-            for(int colIdx = 0; colIdx < UNITS_PER_ROW_COUNT_STANDARD; colIdx++) {
+            for(int colIdx = 0; colIdx < UNITS_PER_ROW_COUNT_TEMPERATURE; colIdx++) {
                 storageUnitList[rowIdx][colIdx] = new TemperatureControlledUnit(8, 8, 8);
             }
         }
@@ -133,28 +134,49 @@ public class StorageLocation {
         return shortListOfUnits;
     }
 
-//    public StorageUnit[] getEmptyUnits(StorageUnit.UnitType unitType) {
-//        StorageUnit[] initialListOfUnits = new StorageUnit[ROW_COUNT * UNITS_PER_ROW_COUNT];
-//        int numberOfUnits = 0;
-//        for(int row_idx = 0; row_idx < ROW_COUNT; row_idx++) {
-//            for(int col_idx = 0; col_idx < UNITS_PER_ROW_COUNT; col_idx++) {
-//                StorageUnit storageUnit = storageUnitList[row_idx][col_idx];
-//                if(null != storageUnit) {
-//                    if(storageUnit.getCustomer() == null && storageUnit.getType() == unitType) {
-//                        initialListOfUnits[numberOfUnits] = storageUnit;
-//                        numberOfUnits++;
-//                    }
-//                }
-//            }
-//        }
-//
-//        StorageUnit[] shortListOfUnits = new StorageUnit[numberOfUnits];
-//        for(int idx = 0; idx < numberOfUnits; idx++) {
-//            shortListOfUnits[idx]= initialListOfUnits[idx];
-//        }
-//
-//        return shortListOfUnits;
-//    }
+    public StorageUnit[] getEmptyUnits(Class<? extends StorageUnit> soughtClass) {
+        StorageUnit[] initialListOfUnits = new StorageUnit[ROW_COUNT]; //todo find suitable number
+        int numberOfUnits = 0;
+        if(soughtClass == StandardUnit.class) {
+            for(int rowIdx = 0; rowIdx < ROW_COUNT_STANDARD; rowIdx++) {
+                for(int colIdx = 0; colIdx < UNITS_PER_ROW_COUNT_STANDARD; colIdx++) {
+                    if(storageUnitList[rowIdx][colIdx].getCustomer() == null) {
+                        initialListOfUnits[numberOfUnits] = storageUnitList[rowIdx][colIdx];
+                        numberOfUnits++;
+                    }
+                }
+            }
+        }
+
+        if(soughtClass == HumidityControlledUnit.class) {
+            for(int rowIdx = 7; rowIdx < ROW_COUNT_HUMIDITY + 7; rowIdx++) {
+                for(int colIdx = 0; colIdx < UNITS_PER_ROW_COUNT_HUMIDITY; colIdx++) {
+                    if(storageUnitList[rowIdx][colIdx].getCustomer() == null) {
+                        initialListOfUnits[numberOfUnits] = storageUnitList[rowIdx][colIdx];
+                        numberOfUnits++;
+                    }
+                }
+            }
+        }
+
+        if(soughtClass == TemperatureControlledUnit.class) {
+            for(int rowIdx = 10; rowIdx < ROW_COUNT_TEMPERATURE + 10; rowIdx++) {
+                for(int colIdx = 0; colIdx < UNITS_PER_ROW_COUNT_TEMPERATURE; colIdx++) {
+                    if(storageUnitList[rowIdx][colIdx].getCustomer() == null) {
+                        initialListOfUnits[numberOfUnits] = storageUnitList[rowIdx][colIdx];
+                        numberOfUnits++;
+                    }
+                }
+            }
+        }
+
+        StorageUnit[] shortListOfUnits = new StorageUnit[numberOfUnits];
+        for(int idx = 0; idx < numberOfUnits; idx++) {
+            shortListOfUnits[idx]= initialListOfUnits[idx];
+        }
+
+        return shortListOfUnits;
+    }
 
     public double chargeMonthlyRent() {
         for(int row_idx = 0; row_idx < ROW_COUNT; row_idx++) {
@@ -186,5 +208,13 @@ public class StorageLocation {
         if(num < 0 || num >= max) {
             throw new IllegalArgumentException("Error: Customer list index is required to be between 0 and 239.");
         }
+    }
+
+    public double getBasePrice() {
+        return basePrice;
+    }
+
+    public void setBasePrice(double basePrice) {
+        this.basePrice = basePrice;
     }
 }
