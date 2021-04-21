@@ -1,12 +1,12 @@
 package stanleyStorage;
 
 public class HumidityControlledUnit extends StorageUnit {
-    public static final int PRICE_PER_SQUARE_FOOT = 5;
-    public static final int PRICE_FOR_CUSTOM_HUMIDITY = 20;
+    private static final int PRICE_PER_SQUARE_FOOT = 5;
+    private static final int PRICE_FOR_CUSTOM_HUMIDITY = 20;
     private Integer humidity;
 
-    public HumidityControlledUnit(int length, int width, int height) {
-        super(length, width, height);
+    public HumidityControlledUnit(int length, int width, int height, double basePrice) {
+        super(length, width, height, basePrice);
     }
 
     @Override
@@ -30,7 +30,7 @@ public class HumidityControlledUnit extends StorageUnit {
         return humidity;
     }
 
-    public void verifyHumidity(Integer humidity) {
+    private void verifyHumidity(Integer humidity) {
         if (humidity < 20 || humidity > 60) {
             throw new IllegalArgumentException("Error: Humidity percentage must be between 20 and 60%.");
         }

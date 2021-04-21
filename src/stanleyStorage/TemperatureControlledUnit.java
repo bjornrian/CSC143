@@ -1,14 +1,12 @@
 package stanleyStorage;
 
-import static stanleyStorage.HumidityControlledUnit.PRICE_FOR_CUSTOM_HUMIDITY;
-
 public class TemperatureControlledUnit extends StorageUnit {
     private static final double PRICE_PER_CUBIC_FOOT = 1;
-    public static final double PRICE_FOR_CUSTOM_TEMPERATURE = 30;
+    private static final double PRICE_FOR_CUSTOM_TEMPERATURE = 30;
     private Integer temperature;
 
-    public TemperatureControlledUnit(int length, int width, int height) {
-        super(length, width, height);
+    public TemperatureControlledUnit(int length, int width, int height, double basePrice) {
+        super(length, width, height, basePrice);
     }
 
     @Override

@@ -20,19 +20,22 @@ public class StorageUnitTest {
 
     public static final double DELTA = 0.0001;
 
+    /**
+     * Verify storage unit dimensions
+     */
     @Test
     public void testGetAttributes() {
         StorageUnit standardUnit = buildStandardUnit();
-        assertEquals(4, standardUnit.getWidth());
+        assertEquals(8, standardUnit.getWidth());
         assertEquals(8, standardUnit.getLength());
-        assertEquals(6, standardUnit.getHeight());
+        assertEquals(8, standardUnit.getHeight());
     }
 
     /**
      * Test the price of a standard unit
      */
     @Test
-    public void testGetPriceFOrStandardUnit() {
+    public void testGetPriceForStandardUnit() {
         StorageUnit standardUnit = buildStandardUnit();
         assertEquals(175.0, standardUnit.getPrice(), DELTA);
     }
@@ -57,6 +60,9 @@ public class StorageUnitTest {
         assertEquals(440, unit.getPrice(), DELTA);
     }
 
+    /**
+     * Test the price for a temperature controlled unit with default temperature
+     */
     @Test
     public void testGetPriceForTemperatureUnitWithDefaultTemperature() {
         boolean customTemperature = false;
@@ -64,27 +70,14 @@ public class StorageUnitTest {
         assertEquals(612, unit.getPrice(), DELTA);
     }
 
+    /**
+     * Test the price for a temperature controlled unit with custom temperature
+     */
     @Test
     public void testGetPriceForTemperatureUnitWithCustomTemperature() {
         boolean customTemperature = true;
         StorageUnit unit = buildTemperatureUnit(customTemperature);
         assertEquals(642, unit.getPrice(), DELTA);
-    }
-
-    private StorageUnit buildTemperatureUnit(boolean customTemperature) {
-        TemperatureControlledUnit unit = new TemperatureControlledUnit(8, 8, 8);
-        if(customTemperature) {
-            unit.setTemperature(48);
-        }
-        return unit;
-    }
-
-    private StorageUnit buildHumidityUnit(boolean customHumidity) {
-        HumidityControlledUnit unit = new HumidityControlledUnit(8, 8, 8);
-        if(customHumidity) {
-            unit.setHumidity(22);
-        }
-        return unit;
     }
 
     @Test
@@ -102,18 +95,41 @@ public class StorageUnitTest {
         StorageUnit unit = buildStandardUnit();
         Customer bob = new Customer("Bob", "1234567890");
         LocalDate date = LocalDate.of(2012, 12, 12);
+        unit.rent(bob, date);
+        assertNotNull(unit.getRentalStart());
+        assertNotNull(unit.getCustomer());
+        assertEquals(175, unit.getPrice(), 0.0001);
+
         unit.release();
         assertNull(unit.getRentalStart());
         assertNull(unit.getCustomer());
-        assertEquals(175, unit.getPrice(), 0.0001);
+    }
+
+    /**
+     * Try to build a unit with invalid dimensions
+     */
+    @Test (expected = IllegalArgumentException.class)
+    public void testVerifyDimension() {
+        StorageUnit testUnit = new StandardUnit(1, 1, 1, 100);
     }
 
     private StorageUnit buildStandardUnit() {
-        return new StandardUnit(4, 8, 6);
+        return new StandardUnit(8, 8, 8, 100);
     }
 
-    @Test (expected = IllegalArgumentException.class)
-    public void testVerifyDimension() {
-        StorageUnit testUnit = new StandardUnit(1, 1, 1);
+    private StorageUnit buildHumidityUnit(boolean customHumidity) {
+        HumidityControlledUnit unit = new HumidityControlledUnit(8, 8, 8, 100);
+        if(customHumidity) {
+            unit.setHumidity(22);
+        }
+        return unit;
+    }
+
+    private StorageUnit buildTemperatureUnit(boolean customTemperature) {
+        TemperatureControlledUnit unit = new TemperatureControlledUnit(8, 8, 8, 100);
+        if(customTemperature) {
+            unit.setTemperature(48);
+        }
+        return unit;
     }
 }

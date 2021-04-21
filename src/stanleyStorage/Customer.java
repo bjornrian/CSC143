@@ -46,12 +46,24 @@ public class Customer {
         this.phone = phone;
     }
 
+    /**
+     * Charge the customer and update the balance
+     *
+     * @param amount
+     * @return
+     */
     public double charge(double amount) {
         verifyAmount(amount);
         this.balance += amount;
         return this.balance;
     }
 
+    /**
+     * Credit the customer and update the balance
+     *
+     * @param amount
+     * @return
+     */
     public double credit(double amount) {
         verifyAmount(amount);
         this.balance -= amount;
@@ -60,19 +72,28 @@ public class Customer {
 
     @Override
     public String toString() {
-        return  "Customer:\n" +
-                "---------\n" +
-                "Name = " + name + '\n' +
-                "Phone = " + phone + '\n' +
-                "Balance = $" + balance + '\n';
+        return  "Customer: " +
+                "Name = " + name +
+                ", Phone = " + phone +
+                ", Balance = $" + balance;
     }
 
+    /**
+     * Verifies that a double amount of money is not a negative value.
+     *
+     * @param amount money value
+     */
     private void verifyAmount(double amount) {
         if(amount < 0) {
             throw new IllegalArgumentException("Error: Amount cannot be less than zero.");
         }
     }
 
+    /**
+     * Verifies that the string parameter is not empty or equal to null.
+     *
+     * @param str
+     */
     private void verifyString(String str) {
         if (str == null || str.equals("")) {
             throw new IllegalArgumentException("Error: String cannot be empty or equal to null.");

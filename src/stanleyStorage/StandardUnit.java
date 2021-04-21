@@ -2,10 +2,10 @@ package stanleyStorage;
 
 public class StandardUnit extends StorageUnit {
 
-    public static final int STANDARD_UNIT_PRICE = 75;
+    private static final int STANDARD_UNIT_PRICE = 75;
 
-    public StandardUnit(int length, int width, int height) {
-        super(length, width, height);
+    public StandardUnit(int length, int width, int height, double basePrice) {
+        super(length, width, height, basePrice);
     }
 
     @Override

@@ -12,23 +12,25 @@ public abstract class StorageUnit {
     private int width;
     private int length;
     private int height;
-    private Customer customer;
-    private LocalDate rentalStart;
-    private double basePrice = 100;
+    private Customer customer = null;
+    private LocalDate rentalStart = null;
+    private double basePrice;
 
     /**
      * Constructor
-     *  @param width the width of the storage unit
+     * @param width the width of the storage unit
      * @param length the length of the storage unit
      * @param height the height of the storage unit
+     * @param basePrice
      */
-    public StorageUnit(int width, int length, int height) {
+    public StorageUnit(int width, int length, int height, double basePrice) {
         verifyDimension(width, 4);
         verifyDimension(length, 4);
         verifyDimension(height, 2);
         this.width = width;
         this.length = length;
         this.height = height;
+        this.basePrice = basePrice;
     }
 
     public int getWidth() {
@@ -90,9 +92,15 @@ public abstract class StorageUnit {
     public String toString() {
         return "StorageUnit{" + "width=" + width + ", length=" + length + ", height=" + height
                 + ", customer=" + customer + ", rentalStart=" + rentalStart + ", price=" + basePrice
-                + ", unitType=" +'}';
+                +'}';
     }
 
+    /**
+     * Verifies that the side lengths of a storage unit follow the rubric requirements.
+     *
+     * @param sideLength
+     * @param divisor Integer that the side length should be multiples of
+     */
     private void verifyDimension(int sideLength, int divisor) {
         if(sideLength % divisor != 0 || sideLength < 1) {
             throw new IllegalArgumentException("Error: distance must be greater than zero and divisible by " + divisor);

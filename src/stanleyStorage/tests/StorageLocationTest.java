@@ -1,16 +1,12 @@
 package stanleyStorage.tests;
 
 import org.junit.Test;
-import stanleyStorage.Customer;
-import stanleyStorage.HumidityControlledUnit;
-import stanleyStorage.StorageLocation;
-import stanleyStorage.StorageUnit;
+import stanleyStorage.*;
 
 import java.time.LocalDate;
 
 import static org.junit.Assert.assertEquals;
-import static stanleyStorage.StorageLocation.ROW_COUNT;
-//import static stanleyStorage.StorageLocation.UNITS_PER_ROW_COUNT;
+import static org.junit.Assert.assertNotNull;
 
 /*
  * Retrieve the storage location’s designation
@@ -25,163 +21,130 @@ import static stanleyStorage.StorageLocation.ROW_COUNT;
  */
 
 public class StorageLocationTest {
-    public StorageLocation buildStorageLocation() {
-        StorageLocation spokane = new StorageLocation("WA23Spokane");
-        for (int row_idx = 0; row_idx < spokane.getRowCount(); row_idx++) {
-//            for (int col_idx = 0; col_idx < spokane.getUnitsPerRowCount(); col_idx += 2) {
-//                spokane.setStorageUnit(new StorageUnit(4, 4, 4), row_idx, col_idx);
-//                spokane.setStorageUnit(new StorageUnit(8, 8, 16), row_idx, col_idx + 1);
-//            }
-        }
-        return spokane;
-    }
-
     @Test
     public void testGetDesignation() {
         assertEquals("WA23Spokane", buildStorageLocation().getDesignation());
     }
 
-    //How do you compare objects properly? I forgot
     @Test
     public void testGetStorageUnitByIndex() {
-//        StorageUnit oneUnit = new StorageUnit(8, 8, 16);
-//        assertEquals(oneUnit.getWidth(), buildStorageLocation().getStorageUnit(4, 1).getWidth());
-//        assertEquals(oneUnit.getLength(), buildStorageLocation().getStorageUnit(4, 1).getLength());
-//        assertEquals(oneUnit.getHeight(), buildStorageLocation().getStorageUnit(4, 1).getHeight());
-//        assertEquals(oneUnit.getType(), buildStorageLocation().getStorageUnit(4, 1).getType());
+        StorageLocation testLocation = buildStorageLocation();
+        StorageUnit standardUnit = testLocation.getStorageUnit(4, 1);
+        assertEquals(StandardUnit.class, standardUnit.getClass());
+        assertEquals(HumidityControlledUnit.class, testLocation.getStorageUnit(8, 1).getClass());
+        assertEquals(TemperatureControlledUnit.class, testLocation.getStorageUnit(11, 1).getClass());
     }
 
     @Test
     public void testAddCustomerToList() {
-        StorageLocation issaquah = new StorageLocation("WA23Issaquah");
-        issaquah.addCustomer(new Customer("Ben", "1234567890"));
-        assertEquals("Ben", issaquah.getCustomer(0).getName());
+        StorageLocation testLocation = buildStorageLocation();
+        testLocation.addCustomer(new Customer("Ben", "1234567890"));
+        assertEquals("Ben", testLocation.getCustomer(0).getName());
     }
 
     @Test
     public void testGetCustomerByIndex() {
-        StorageLocation issaquah = new StorageLocation("WA23Issaquah");
+        StorageLocation testLocation = buildStorageLocation();
         Customer bob = new Customer("Bob", "1234567890");
         Customer sue = new Customer("Sue", "8763847655");
-        issaquah.addCustomer(bob);
-        issaquah.addCustomer(sue);
-        assertEquals("Bob", issaquah.getCustomer(0).getName());
-        assertEquals("Sue", issaquah.getCustomer(1).getName());
+        testLocation.addCustomer(bob);
+        testLocation.addCustomer(sue);
+        assertEquals("Bob", testLocation.getCustomer(0).getName());
+        assertEquals("Sue", testLocation.getCustomer(1).getName());
     }
 
     @Test
     public void testGetCustomerCount() {
-        StorageLocation issaquah = new StorageLocation("WA23Issaquah");
-        issaquah.addCustomer(new Customer("Bob", "1234567890"));
-        issaquah.addCustomer(new Customer("Sue", "8473876876"));
-        issaquah.addCustomer(new Customer("Joe", "3543653655"));
-        assertEquals(3, issaquah.getCustomerCount());
+        StorageLocation testLocation = buildStorageLocation();
+        testLocation.addCustomer(new Customer("Bob", "1234567890"));
+        testLocation.addCustomer(new Customer("Sue", "8473876876"));
+        testLocation.addCustomer(new Customer("Joe", "3543653655"));
+        assertEquals(3, testLocation.getCustomerCount());
     }
 
     @Test
     public void testGetStorageUnitsForCustomer() {
-        StorageLocation issaquah = new StorageLocation("WA23Issaquah");
+        StorageLocation testLocation = buildStorageLocation();
         Customer bob = new Customer("Bob", "1234567890");
-        issaquah.addCustomer(bob);
+        testLocation.addCustomer(bob);
         Customer ben = new Customer("Ben", "1234562332");
-        issaquah.addCustomer(ben);
-//        issaquah.setStorageUnit(new StorageUnit(4, 4, 4), 0, 1);
-//        issaquah.setStorageUnit(new StorageUnit(12, 12, 8), 2, 2);
-//        issaquah.setStorageUnit(new StorageUnit(8, 8, 16), 3, 4);
+        testLocation.addCustomer(ben);
 
-        issaquah.getStorageUnit(0, 1).rent(bob, LocalDate.now());
-        issaquah.getStorageUnit(2, 2).rent(bob, LocalDate.now());
-        issaquah.getStorageUnit(3, 4).rent(ben, LocalDate.now());
-        Customer customerZero = issaquah.getCustomer(0);
-        assertEquals("Bob", customerZero.getName());
-        StorageUnit[] unitsForCustomerZero = issaquah.getCustomerUnits(customerZero);
-        assertEquals(2, unitsForCustomerZero.length);
+        testLocation.getStorageUnit(0, 1).rent(bob, LocalDate.now());
+        testLocation.getStorageUnit(8, 2).rent(bob, LocalDate.now());
+        testLocation.getStorageUnit(11, 4).rent(ben, LocalDate.now());
+        Customer customerBob = testLocation.getCustomer(0);
+        assertEquals("Bob", customerBob.getName());
+        StorageUnit[] unitsForCustomerBob = testLocation.getCustomerUnits(customerBob);
+        assertEquals(2, unitsForCustomerBob.length);
     }
 
     @Test
     public void testGetAllEmptyStorageUnits() {
-        StorageLocation issaquah = new StorageLocation("WA23Issaquah");
+        StorageLocation testLocation = buildStorageLocation();
         Customer bob = new Customer("Bob", "1234567890");
-        issaquah.addCustomer(bob);
+        testLocation.addCustomer(bob);
         Customer ben = new Customer("Ben", "1234562332");
-        issaquah.addCustomer(ben);
-//        issaquah.setStorageUnit(new StorageUnit(4, 4, 4), 0, 1);
-//        issaquah.setStorageUnit(new StorageUnit(12, 12, 8), 2, 2);
-//        issaquah.setStorageUnit(new StorageUnit(8, 8, 16), 3, 4);
+        testLocation.addCustomer(ben);
 
-        issaquah.getStorageUnit(0, 1).rent(bob, LocalDate.now());
-        issaquah.getStorageUnit(2, 2).rent(bob, LocalDate.now());
-        issaquah.getStorageUnit(3, 4).rent(ben, LocalDate.now());
-
-//        int expectedNumberOfEmptyUnits = (ROW_COUNT * UNITS_PER_ROW_COUNT) - 3;
-//        assertEquals(expectedNumberOfEmptyUnits, issaquah.getEmptyUnits().length);
+        testLocation.getStorageUnit(0, 1).rent(bob, LocalDate.now());
+        testLocation.getStorageUnit(2, 2).rent(bob, LocalDate.now());
+        testLocation.getStorageUnit(3, 4).rent(ben, LocalDate.now());
+        assertEquals(103, testLocation.getEmptyUnits().length);
     }
 
     @Test
     public void testGetAllEmptyStorageUnitsByType() {
-        StorageLocation issaquah = new StorageLocation("WA23Issaquah");
-        assertEquals(24, issaquah.getEmptyUnits(HumidityControlledUnit.class).length);
-
-
-
-
-
-//        Customer bob = new Customer("Bob", "1234567890");
-//        issaquah.addCustomer(bob);
-//        Customer ben = new Customer("Ben", "1234562332");
-//        issaquah.addCustomer(ben);
-//        issaquah.setStorageUnit(new StorageUnit(4, 4, 4), 0, 1);
-//        issaquah.setStorageUnit(new StorageUnit(12, 12, 8), 2, 2);
-//        issaquah.setStorageUnit(new StorageUnit(8, 8, 16), 3, 4);
-
-//        issaquah.getStorageUnit(0, 1).rent(bob, LocalDate.now());
-//        issaquah.getStorageUnit(2, 2).rent(bob, LocalDate.now());
-//        issaquah.getStorageUnit(3, 4).rent(ben, LocalDate.now());
-
-//        assertEquals(144, issaquah.getEmptyUnits(StorageUnitInterface.UnitType.TEMPERATURE).length);
-
-//        issaquah.getStorageUnit(0, 1).release();
-//        issaquah.getStorageUnit(2, 2).release();
-//        issaquah.getStorageUnit(3, 4).release();
-
-//        assertEquals(146, issaquah.getEmptyUnits(StorageUnitInterface.UnitType.TEMPERATURE).length);
-//        assertEquals(48, issaquah.getEmptyUnits(StorageUnitInterface.UnitType.HUMIDITY).length);
+        StorageLocation testLocation = buildStorageLocation();
+        assertEquals(70, testLocation.getEmptyUnits(StandardUnit.class).length);
+        assertEquals(24, testLocation.getEmptyUnits(HumidityControlledUnit.class).length);
+        assertEquals(12, testLocation.getEmptyUnits(TemperatureControlledUnit.class).length);
+        testLocation.getStorageUnit(4, 1).rent(new Customer("Sheep", "10980375"), LocalDate.now());
+        testLocation.getStorageUnit(9, 6).rent(new Customer("Cow", "10135175"), LocalDate.now());
+        testLocation.getStorageUnit(11, 3).rent(new Customer("Moo", "10246675"), LocalDate.now());
+        assertEquals(69, testLocation.getEmptyUnits(StandardUnit.class).length);
+        assertEquals(23, testLocation.getEmptyUnits(HumidityControlledUnit.class).length);
+        assertEquals(11, testLocation.getEmptyUnits(TemperatureControlledUnit.class).length);
     }
 
     @Test
     public void testChargeMonthlyRent() {
-        StorageLocation issaquah = new StorageLocation("WA23Issaquah");
-        Customer bob = new Customer("Bob", "1234567890");
-        issaquah.addCustomer(bob);
-        Customer ben = new Customer("Ben", "1234562332");
-        issaquah.addCustomer(ben);
-        Customer billyJoe = new Customer("Billy Joe", "1092813232");
-        issaquah.addCustomer(billyJoe);
-//        issaquah.setStorageUnit(new StorageUnit(4, 4, 4), 0, 1);
-//        issaquah.setStorageUnit(new StorageUnit(12, 12, 8), 2, 2);
-//        issaquah.setStorageUnit(new StorageUnit(8, 8, 16), 3, 4);
-//        issaquah.setStorageUnit(new StorageUnit(8, 8, 16), 6, 1);
+        StorageLocation testLocation = buildStorageLocation();
+        Customer horse = new Customer("Horse", "1234567890");
+        testLocation.addCustomer(horse);
+        Customer chicken = new Customer("Chicken", "1234562332");
+        testLocation.addCustomer(chicken);
+        Customer sheep = new Customer("Sheep", "1092813232");
+        testLocation.addCustomer(sheep);
 
-        issaquah.getStorageUnit(0, 1).rent(bob, LocalDate.now());
-        issaquah.getStorageUnit(2, 2).rent(bob, LocalDate.now());
-        issaquah.getStorageUnit(3, 4).rent(ben, LocalDate.now());
-        issaquah.getStorageUnit(6, 1).rent(billyJoe, LocalDate.now());
+        //Customer rents two standard units.
+        testLocation.getStorageUnit(2, 7).rent(horse, LocalDate.now());
+        testLocation.getStorageUnit(5, 6).rent(horse, LocalDate.now());
+        //Customer rents a humidity controlled unit.
+        testLocation.getStorageUnit(8, 1).rent(chicken, LocalDate.now());
+        //Customer rents a temperature controlled unit.
+        testLocation.getStorageUnit(11, 3).rent(sheep, LocalDate.now());
 
-        issaquah.chargeMonthlyRent();
+        testLocation.chargeMonthlyRent();
 
-        assertEquals(103, issaquah.getCustomer(1).getBalance(), 0.0001);
-        assertEquals(200, issaquah.getCustomer(0).getBalance(), 0.0001);
-        assertEquals(1030000, issaquah.getCustomer(2).getBalance(), 0.0001);
+        assertEquals(332.5, testLocation.getCustomer(0).getBalance(), 0.0001);
+        assertEquals(420, testLocation.getCustomer(1).getBalance(), 0.0001);
+        assertEquals(612, testLocation.getCustomer(2).getBalance(), 0.0001);
 
-        issaquah.chargeMonthlyRent();
+        testLocation.chargeMonthlyRent();
 
-        assertEquals(206, issaquah.getCustomer(1).getBalance(), 0.0001);
-        assertEquals(400, issaquah.getCustomer(0).getBalance(), 0.0001);
-        assertEquals(2060000, issaquah.getCustomer(2).getBalance(), 0.0001);
+        assertEquals(665, testLocation.getCustomer(0).getBalance(), 0.0001);
+        assertEquals(840, testLocation.getCustomer(1).getBalance(), 0.0001);
+        assertEquals(1224, testLocation.getCustomer(2).getBalance(), 0.0001);
     }
 
     @Test (expected = IllegalArgumentException.class)
     public void testVerifyString() {
         StorageLocation testLocation = new StorageLocation("");
+    }
+
+    private StorageLocation buildStorageLocation() {
+        StorageLocation spokane = new StorageLocation("WA23Spokane");
+        return spokane;
     }
 }
