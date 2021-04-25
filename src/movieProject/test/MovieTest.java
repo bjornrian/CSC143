@@ -1,5 +1,6 @@
-package movieProject;
+package movieProject.test;
 
+import movieProject.Movie;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

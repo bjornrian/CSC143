@@ -1,5 +1,7 @@
-package movieProject;
+package movieProject.test;
 
+import movieProject.Movie;
+import movieProject.SortedArrayList;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

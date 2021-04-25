@@ -23,7 +23,7 @@ public class SortedArrayList<E extends Comparable<E>> {
     }
 
     public void indexOf(E value) {
-
+        
     }
 
     public Boolean contains(E value) {
@@ -47,7 +47,7 @@ public class SortedArrayList<E extends Comparable<E>> {
     }
 
     public E get(int index) {
-        return null;
+        return list.get(index);
     }
 
     public void remove(int index) {
