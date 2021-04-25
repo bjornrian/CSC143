@@ -21,6 +21,9 @@ public class SortedArrayList<E extends Comparable<E>> {
         } else {
             //use binary search to find the index where we want to insert our object
             int targetIndex = binarySearch(value);
+            if(targetIndex < 0) {
+                targetIndex = -targetIndex;
+            }
             list.add(targetIndex, value);
         }
         numberOfElements++;
@@ -28,11 +31,11 @@ public class SortedArrayList<E extends Comparable<E>> {
 
     //todo ask Barry if void return type (in UML) is correct
     public int indexOf(E value) {
-        return 0;
+        return binarySearch(value);
     }
 
     public Boolean contains(E value) {
-        return null;
+        return binarySearch(value) >= 0;
     }
 
     public E[] get(E value, E[] template) {
@@ -91,6 +94,6 @@ public class SortedArrayList<E extends Comparable<E>> {
                 return mid; // target found
             }
         }
-        return min; // target not found
+        return -min; // target not found
     }
 }

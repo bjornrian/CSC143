@@ -13,6 +13,7 @@ public class SortedArrayListTest {
     private static final String BAR_TIME = "Bar Time";
     private static final String DARK_SIDE = "Dark Side";
     private static final String ABRACADABRA = "Abracadabra";
+    public static final String DOES_NOT_EXIST = "Does not exist";
 
     @Test
     public void testAddSingleMovie() {
@@ -44,7 +45,20 @@ public class SortedArrayListTest {
      */
     @Test
     public void testIndexOf() {
-        //todo
+        SortedArrayList list = buildListWithMultipleMovies();
+        Movie abracadabra = new Movie(ABRACADABRA);
+        Movie aladdin = new Movie(ALADDIN);
+        Movie barTime = new Movie(BAR_TIME);
+        Movie darkSide = new Movie(DARK_SIDE);
+        Movie starTrek = new Movie(STAR_TREK);
+        Movie doesNotExist = new Movie(DOES_NOT_EXIST);
+
+        assertEquals(0, list.indexOf(abracadabra));
+        assertEquals(1, list.indexOf(aladdin));
+        assertEquals(2, list.indexOf(barTime));
+        assertEquals(3, list.indexOf(darkSide));
+        assertEquals(4, list.indexOf(starTrek));
+        assertTrue(list.indexOf(doesNotExist) < 0);
     }
 
     /**
@@ -53,7 +67,13 @@ public class SortedArrayListTest {
      */
     @Test
     public void testContains() {
-        //todo
+        SortedArrayList list = buildListWithMultipleMovies();
+        assertTrue(list.contains(new Movie(ABRACADABRA)));
+        assertTrue(list.contains(new Movie(ALADDIN)));
+        assertTrue(list.contains(new Movie(BAR_TIME)));
+        assertTrue(list.contains(new Movie(DARK_SIDE)));
+        assertTrue(list.contains(new Movie(STAR_TREK)));
+        assertFalse(list.contains(new Movie(DOES_NOT_EXIST)));
     }
 
     private SortedArrayList buildListWithMultipleMovies() {
