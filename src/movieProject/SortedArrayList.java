@@ -18,8 +18,23 @@ public class SortedArrayList<E extends Comparable<E>> {
     public void add(E value) {
         if(numberOfMovies == 0) {
             list.add(value);
+        } else {
+            //use binary search to find the index where we want to insert our object
+            int targetIndex = binarySearch(list, value);
+            list.add(targetIndex, value);
         }
         numberOfMovies++;
+    }
+
+    /**
+     * Search through the list until we find the target index where we want to insert the new element.
+     *
+     * @param list
+     * @param value
+     * @return
+     */
+    private int binarySearch(ArrayList<E> list, E value) {
+        return 0;
     }
 
     public void indexOf(E value) {
