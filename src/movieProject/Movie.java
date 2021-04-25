@@ -55,11 +55,11 @@ public class Movie implements Comparable<Movie>{
     }
 
     public int compareTo(Movie otherMovie) {
-        return this.getTitle().compareTo(otherMovie.getTitle());
+        return this.getTitle().toUpperCase().compareTo(otherMovie.getTitle().toUpperCase());
     }
 
     public String toString() {
-        return "incomplete";
+        return title;
     }
 
     public String getTitle() {
