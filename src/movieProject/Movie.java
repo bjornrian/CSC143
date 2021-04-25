@@ -55,23 +55,14 @@ public class Movie implements Comparable<Movie>{
     }
 
     public int compareTo(Movie otherMovie) {
-        if(this.title.equals(otherMovie.title)) {
-            return 0;
-        }
-        else if(this.title.length() == otherMovie.title.length()) {
-            for(int charIdx = 0; charIdx < this.title.length(); charIdx++) {
-                if(this.title.charAt(charIdx) < otherMovie.title.charAt(charIdx)) {
-                    return 1;
-                }
-            }
-        }
-        else if(this.title.length() < otherMovie.title.length()) {
-            return 1;
-        }
-        return -1;
+        return this.getTitle().compareTo(otherMovie.getTitle());
     }
 
     public String toString() {
         return "incomplete";
+    }
+
+    public String getTitle() {
+        return title;
     }
 }
