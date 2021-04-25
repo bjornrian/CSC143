@@ -20,11 +20,22 @@ public class SortedArrayListTest {
         Movie starTrek = new Movie("Star Trek");
         list.add(starTrek);
         assertEquals(2, list.size());
+        Movie barTime = new Movie("Bar Time");
+        list.add(barTime);
+        assertEquals(3, list.size());
+        Movie darkSide = new Movie("Dark Side");
+        list.add(darkSide);
+        assertEquals(4, list.size());
+
 
         movieAtIndexZero = (Movie) list.get(0);
         assertEquals(aladdin.getTitle(), movieAtIndexZero.getTitle());
         Movie movieAtIndexOne = (Movie) list.get(1);
-        assertEquals(starTrek.getTitle(), movieAtIndexOne.getTitle());
+        assertEquals(barTime.getTitle(), movieAtIndexOne.getTitle());
+        Movie movieAtIndexTwo = (Movie) list.get(2);
+        assertEquals(darkSide.getTitle(), movieAtIndexTwo.getTitle());
+        Movie movieAtIndexThree = (Movie) list.get(3);
+        assertEquals(starTrek.getTitle(), movieAtIndexThree.getTitle());
 
         list.toString();
     }
