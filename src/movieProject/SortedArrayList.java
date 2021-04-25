@@ -1,14 +1,13 @@
 package movieProject;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-
+import java.util.ArrayList;
 import java.util.Iterator;
 
 public class SortedArrayList<E extends Comparable<E>> {
     private ArrayList<E> list;
 
     public SortedArrayList() {
-        toString();
+
     }
 
     public SortedArrayList(int initialCapacity) {
@@ -55,7 +54,8 @@ public class SortedArrayList<E extends Comparable<E>> {
         return null;
     }
 
-    private String toString() {
+    //todo ask Barry if this needs to be private (it won't compile)
+    public String toString() {
         return null;
     }
 }

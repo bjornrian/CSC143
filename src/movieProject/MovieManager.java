@@ -20,6 +20,10 @@ public class MovieManager {
     }
 
     private boolean readMoviesFromFile() {
+        //loop through each line
+        //create new Movie object
+        //movies.addNew
+
         return true;
     }
 }

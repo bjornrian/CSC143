@@ -1,8 +1,11 @@
 package movieProject;
 
-public class Movie implements Comparable{
+public class Movie implements Comparable<Movie>{
+
+    private static SortedArrayList<String> allCategories;
+
     static {
-        private SortedArrayList<String> allCategories;
+        allCategories = new SortedArrayList<>();
     }
 
     private String title;
@@ -51,10 +54,21 @@ public class Movie implements Comparable{
         return "incomplete";
     }
 
-    //todo fix compareTo
-    @Override
     public int compareTo(Movie otherMovie) {
-        return 0;
+        if(this.title.equals(otherMovie.title)) {
+            return 0;
+        }
+        else if(this.title.length() == otherMovie.title.length()) {
+            for(int charIdx = 0; charIdx < this.title.length(); charIdx++) {
+                if(this.title.charAt(charIdx) < otherMovie.title.charAt(charIdx)) {
+                    return 1;
+                }
+            }
+        }
+        else if(this.title.length() < otherMovie.title.length()) {
+            return 1;
+        }
+        return -1;
     }
 
     public String toString() {
