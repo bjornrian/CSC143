@@ -1,5 +1,9 @@
 package movieProject;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.*;
+
 public class MovieManager {
     private SortedArrayList<Movie> movies;
 
@@ -20,6 +24,17 @@ public class MovieManager {
     }
 
     private boolean readMoviesFromFile() {
+        try {
+            Scanner fileIn = new Scanner(new File("movie.txt"));
+            fileIn.nextLine();
+            while(!fileIn.next().equals("`")) {
+                fileIn.next("`");
+            }
+        }
+        catch (FileNotFoundException e){
+            System.out.println("Error: Movie file not found.");
+        }
+
         //loop through each line
         //create new Movie object
         //movies.addNew
