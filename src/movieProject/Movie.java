@@ -21,7 +21,7 @@ public class Movie implements Comparable<Movie>{
 
     public Movie(String title, String director, String cast, String type,
                  String country, int releaseYear, String rating, String duration,
-                 String description, SortedArrayList<String> categories) {
+                 SortedArrayList<String> categories, String description) {
         this.title = title;
         this.director = director;
         this.cast = cast;
@@ -30,8 +30,8 @@ public class Movie implements Comparable<Movie>{
         this.releaseYear = releaseYear;
         this.rating = rating;
         this.duration = duration;
-        this.description = description;
         this.categories = categories;
+        this.description = description;
     }
 
     public Movie(String title) {
@@ -39,19 +39,20 @@ public class Movie implements Comparable<Movie>{
     }
 
     public void addCategory(String category) {
-        //todo fix SortedArrayList to complete method addCategory
+        categories.add(category);
     }
 
     public int getCategoryCount() {
-        return 0;
+        return categories.size();
     }
 
+    //todo ask Barry about getCategory method (parameter and/or return type wrong?)
     public String getCategory(String category) {
-        return "incomplete";
+        return null;
     }
 
-    public String getCategories() {
-        return "incomplete";
+    public SortedArrayList<String> getCategories() {
+        return categories;
     }
 
     public int compareTo(Movie otherMovie) {
@@ -59,7 +60,16 @@ public class Movie implements Comparable<Movie>{
     }
 
     public String toString() {
-        return title;
+        return "Title: " + title + "\n" +
+                "Director: " + director + "\n" +
+                "Cast: " + cast + "\n" +
+                "Type: " + type + "\n" +
+                "Country: " + country + "\n" +
+                "Release Year: " + releaseYear + "\n" +
+                "Rating: " + rating + "\n" +
+                "Duration: " + duration + "\n" +
+                "Categories: " + categories + "\n" +
+                "Description: " + description;
     }
 
     public String getTitle() {
