@@ -5,7 +5,18 @@ import java.io.FileNotFoundException;
 import java.util.*;
 
 public class MovieManager {
-    private SortedArrayList<Movie> movies;
+    public static final String PATH_MOVIE = "src/movieProject/resources/category.txt";
+    public static final int TITLE = 0;
+    public static final int DIRECTOR = 1;
+    public static final int CAST = 2;
+    public static final int TYPE = 3;
+    public static final int COUNTRY = 4;
+    public static final int RELEASE_YEAR = 5;
+    public static final int RATING = 6;
+    public static final int DURATION = 7;
+    public static final int CATEGORIES = 8;
+    public static final int DESCRIPTION = 9;
+    public SortedArrayList<Movie> movies;
 
     public MovieManager() {
         readMoviesFromFile();
@@ -43,21 +54,22 @@ public class MovieManager {
 
     private boolean readMoviesFromFile() {
         try {
-            Scanner fileIn = new Scanner(new File("movie.txt"));
+            Scanner fileIn = new Scanner(new File(PATH_MOVIE));
             fileIn.nextLine();
             while (fileIn.hasNextLine()) {
+                //title~director~cast~type~country~release_year~rating~duration~listed_in~description
                 String movieElements = fileIn.nextLine();
                 String[] elements = movieElements.split("`");
-                String title = elements[0];
-                String director = elements[1];
-                String cast = elements[2];
-                String type = elements[3];
-                String country = elements[4];
-                int releaseYear = Integer.parseInt(elements[5]);
-                String rating = elements[6];
-                String duration = elements[7];
-                String unsortedCategories = elements[8];
-                String description = elements[9];
+                String title = elements[TITLE];
+                String director = elements[DIRECTOR];
+                String cast = elements[CAST];
+                String type = elements[TYPE];
+                String country = elements[COUNTRY];
+                int releaseYear = Integer.parseInt(elements[RELEASE_YEAR]);
+                String rating = elements[RATING];
+                String duration = elements[DURATION];
+                String unsortedCategories = elements[CATEGORIES];
+                String description = elements[DESCRIPTION];
 
                 String[] categoryList = unsortedCategories.split(",");
                 SortedArrayList<String> sortedCategories = new SortedArrayList<>(categoryList.length);

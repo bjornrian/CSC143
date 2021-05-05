@@ -1,10 +1,9 @@
 package movieProject;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 
 public class SortedArrayList<E extends Comparable<E>> {
-    private ArrayList<E> list;
+    private movieProject.ArrayList<E> list;
     private int numberOfElements = 0;
 
     public SortedArrayList() {
@@ -29,7 +28,6 @@ public class SortedArrayList<E extends Comparable<E>> {
         numberOfElements++;
     }
 
-    //todo ask Barry if void return type (in UML) is correct
     public int indexOf(E value) {
         return binarySearch(value);
     }
@@ -38,20 +36,21 @@ public class SortedArrayList<E extends Comparable<E>> {
         return binarySearch(value) >= 0;
     }
 
+    //todo what is this?
     public E[] get(E value, E[] template) {
         return null;
     }
 
     public int size() {
-        return numberOfElements;
+        return list.size();
     }
 
     public Boolean isEmpty() {
-        return null;
+        return list.isEmpty();
     }
 
     public void clear() {
-
+        list.clear();
     }
 
     public E get(int index) {
@@ -59,20 +58,15 @@ public class SortedArrayList<E extends Comparable<E>> {
     }
 
     public void remove(int index) {
-
+        list.remove(index);
     }
 
     public Iterator<E> iterator() {
-        return null;
+        return list.iterator();
     }
 
     public String toString() {
-        StringBuilder builder = new StringBuilder();
-        for(int i = 0; i < list.size(); i++) {
-            E movie = list.get(i);
-            builder.append(movie.toString());
-        }
-        return builder.toString();
+        return list.toString();
     }
 
     /**
