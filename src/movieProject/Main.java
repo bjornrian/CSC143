@@ -1,8 +1,5 @@
 package movieProject;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
 public class Main {
     public static void main(String[] args) {
         MovieManager manager = new MovieManager();

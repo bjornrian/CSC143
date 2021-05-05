@@ -19,7 +19,7 @@ public class MovieManager {
     private SortedArrayList<Movie> movies;
 
     public MovieManager() {
-        movies = new SortedArrayList<Movie>();
+        movies = new SortedArrayList<Movie>(10000);
         readMoviesFromFile();
     }
 

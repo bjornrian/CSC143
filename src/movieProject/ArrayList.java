@@ -42,12 +42,12 @@ public class ArrayList<E> {
     public String toString() {
         if (size == 0) {
             return "[]";
-        } else {
-            String result = "[" + elementData[0];
+        }
+        else {
+            String result = elementData[0] + "\n";
             for (int i = 1; i < size; i++) {
-                result += ", " + elementData[i];
+                result += elementData[i] + "\n";
             }
-            result += "]";
             return result;
         }
     }
