@@ -66,7 +66,6 @@ public class SortedArrayList<E extends Comparable<E>> {
         return null;
     }
 
-    //todo ask Barry if this needs to be private (it won't compile)
     public String toString() {
         StringBuilder builder = new StringBuilder();
         for(int i = 0; i < list.size(); i++) {

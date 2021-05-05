@@ -34,7 +34,7 @@ public class Movie implements Comparable<Movie> {
         this.releaseYear = releaseYear;
         this.rating = rating;
         this.duration = duration;
-        this.categories = categories;
+        this.categories = getOfficialCategories(categories);
         this.description = description;
     }
 
@@ -89,5 +89,13 @@ public class Movie implements Comparable<Movie> {
         } catch (FileNotFoundException e) {
             throw new RuntimeException("Error: Category file not found.");
         }
+    }
+
+    private SortedArrayList<String> getOfficialCategories(SortedArrayList<String> categories) {
+        SortedArrayList<String> officialCategories = new SortedArrayList<>(50);
+        for (int idx = 0; idx < categories.size(); idx++) {
+            officialCategories.add(getCategory(categories.get(idx)));
+        }
+        return officialCategories;
     }
 }
