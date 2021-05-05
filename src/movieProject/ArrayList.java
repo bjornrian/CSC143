@@ -92,6 +92,7 @@ public class ArrayList<E> {
         for (int i = size; i >= index + 1; i--) {
             elementData[i] = elementData[i - 1];
         }
+        //System.arraycopy();//todo
         elementData[index] = value;
         size++;
     }

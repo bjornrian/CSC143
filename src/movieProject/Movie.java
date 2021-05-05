@@ -21,7 +21,7 @@ public class Movie implements Comparable<Movie>{
     public Movie(String title, String director, String cast, String type,
                  String country, int releaseYear, String rating, String duration,
                  SortedArrayList<String> categories, String description) {
-        this.title = title;
+        this(title);
         this.director = director;
         this.cast = cast;
         this.type = type;
@@ -31,12 +31,11 @@ public class Movie implements Comparable<Movie>{
         this.duration = duration;
         this.categories = categories;
         this.description = description;
-        readInCategories();
     }
 
     public Movie(String title) {
         this.title = title;
-        readInCategories(); //does this method need to be run for this constructor?
+        readInCategories();
     }
 
     public void addCategory(String category) {
