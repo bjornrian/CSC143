@@ -1,6 +1,7 @@
 package movieProject.test;
 
 import movieProject.Movie;
+import movieProject.SortedArrayList;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -9,13 +10,6 @@ import static org.junit.Assert.assertTrue;
 public class MovieTest {
     @Test
     public void testCompareTo() {
-        System.out.println("abc".compareTo("abcd"));//-1
-        System.out.println("word".compareTo("apple"));//22
-        System.out.println("apple".compareTo("word"));//-22
-        System.out.println("apple".compareTo("apple"));//0
-        System.out.println("apple".compareTo("Apple"));//32
-        System.out.println("Aardwark".compareTo("Xenomorph"));//-23
-
         Movie boy = new Movie("Boy");
         Movie city = new Movie("City");
         Movie equestria = new Movie("Equestria Girls");
@@ -32,5 +26,39 @@ public class MovieTest {
         assertTrue(forGood.compareTo(franca) < 0);
         assertTrue(franca.compareTo(franchHa) < 0);
         assertTrue(franchHa.compareTo(generation) < 0);
+    }
+
+    @Test
+    public void testConstructorAndReadingCategories() {
+        Movie movie = new Movie("Rocky");
+    }
+
+    @Test
+    public void testGetCategory() {
+        Movie movie = buildMovie();
+        assertEquals(3, movie.getCategoryCount());
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void testAddInvalidCategory() {
+        buildMovie().addCategory("Invalid Category");
+    }
+
+    private Movie buildMovie() {
+        SortedArrayList<String> categories = new SortedArrayList<>(3);
+        categories.add("Teen TV Shows");
+        categories.add("Music & Musicals");
+        categories.add("Dramas");
+        Movie movie = new Movie("Chicken Run",
+                "Bob Ryan",
+                "Tom",
+                "Documentary",
+                "Norway",
+                2016,
+                "R",
+                "90",
+                categories,
+                "Bad movie from Norway (not surprising).");
+        return movie;
     }
 }

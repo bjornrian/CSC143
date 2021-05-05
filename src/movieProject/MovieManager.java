@@ -18,8 +18,8 @@ public class MovieManager {
     public Movie[] getMoviesByTitle(String movieTitle) {
         Movie[] desiredMovies = new Movie[50];
         int movieListIdx = 0;
-        for(int idx = 0; idx < movies.size(); idx++) {
-            if(movies.get(idx).getTitle().equals(movieTitle)) {
+        for (int idx = 0; idx < movies.size(); idx++) {
+            if (movies.get(idx).getTitle().equals(movieTitle)) {
                 desiredMovies[movieListIdx] = movies.get(idx);
                 movieListIdx++;
             }
@@ -30,8 +30,8 @@ public class MovieManager {
     public Movie[] getMoviesByCategory(String movieCategory) {
         Movie[] desiredMovies = new Movie[50];
         int movieListIdx = 0;
-        for(int idx = 0; idx < movies.size(); idx++) {
-            for(int categoryIdx = 0; categoryIdx < movies.get(idx).getCategoryCount(); categoryIdx++) {
+        for (int idx = 0; idx < movies.size(); idx++) {
+            for (int categoryIdx = 0; categoryIdx < movies.get(idx).getCategoryCount(); categoryIdx++) {
                 if (movies.get(idx).getCategories().get(categoryIdx).equals(movieCategory)) {
                     desiredMovies[movieListIdx] = movies.get(idx);
                     movieListIdx++;
@@ -45,7 +45,7 @@ public class MovieManager {
         try {
             Scanner fileIn = new Scanner(new File("movie.txt"));
             fileIn.nextLine();
-            while(fileIn.hasNextLine()) {
+            while (fileIn.hasNextLine()) {
                 String movieElements = fileIn.nextLine();
                 String[] elements = movieElements.split("`");
                 String title = elements[0];
@@ -61,7 +61,7 @@ public class MovieManager {
 
                 String[] categoryList = unsortedCategories.split(",");
                 SortedArrayList<String> sortedCategories = new SortedArrayList<>(categoryList.length);
-                for(int idx = 0; idx < categoryList.length; idx++) {
+                for (int idx = 0; idx < categoryList.length; idx++) {
                     sortedCategories.add(categoryList[idx]);
                 }
 
@@ -69,9 +69,8 @@ public class MovieManager {
                         releaseYear, rating, duration, sortedCategories, description);
                 movies.add(oneMovie);
             }
-        }
-        catch (FileNotFoundException e){
-            System.out.println("Error: Movie file not found.");
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException("Movie file not found.");
         }
         return true;
     }

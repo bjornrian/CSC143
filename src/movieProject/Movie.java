@@ -4,8 +4,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class Movie implements Comparable<Movie>{
-    private static SortedArrayList<String> allCategories;
+public class Movie implements Comparable<Movie> {
+    public static final String PATH_CATEGORY = "src/movieProject/resources/category.txt";
+    private static SortedArrayList<String> allCategories = new SortedArrayList<>();
+
+    static {
+        readInCategories();
+    }
 
     private String title;
     private String director;
@@ -39,7 +44,7 @@ public class Movie implements Comparable<Movie>{
     }
 
     public void addCategory(String category) {
-        categories.add(category);
+        categories.add(getCategory(category));
     }
 
     public int getCategoryCount() {
@@ -47,12 +52,12 @@ public class Movie implements Comparable<Movie>{
     }
 
     public String getCategory(String category) {
-        for(int catIdx = 0; catIdx < allCategories.size(); catIdx++) {
-            if(allCategories.get(catIdx).equals(category)) {
-                return allCategories.get(catIdx);
+        for (int index = 0; index < allCategories.size(); index++) {
+            if (allCategories.get(index).equalsIgnoreCase(category)) {
+                return allCategories.get(index);
             }
         }
-        return "Error: Category not found in official category list.";
+        throw new RuntimeException("Category not found in official category list.");
     }
 
     public SortedArrayList<String> getCategories() {
@@ -74,16 +79,15 @@ public class Movie implements Comparable<Movie>{
         return title;
     }
 
-    private void readInCategories() {
+    private static void readInCategories() {
         try {
-            Scanner categoryScanner = new Scanner(new File("category.txt"));
-            while(categoryScanner.hasNextLine()) {
+            Scanner categoryScanner = new Scanner(new File(PATH_CATEGORY));
+            while (categoryScanner.hasNextLine()) {
                 String oneCategory = categoryScanner.nextLine();
                 allCategories.add(oneCategory);
             }
-        }
-        catch (FileNotFoundException e){
-            System.out.println("Error: Movie file not found.");
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException("Error: Category file not found.");
         }
     }
 }

@@ -68,11 +68,12 @@ public class SortedArrayList<E extends Comparable<E>> {
 
     //todo ask Barry if this needs to be private (it won't compile)
     public String toString() {
+        StringBuilder builder = new StringBuilder();
         for(int i = 0; i < list.size(); i++) {
             E movie = list.get(i);
-            System.out.println(movie.toString());
+            builder.append(movie.toString());
         }
-        return null;
+        return builder.toString();
     }
 
     /**
