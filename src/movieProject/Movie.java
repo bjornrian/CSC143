@@ -1,12 +1,11 @@
 package movieProject;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 public class Movie implements Comparable<Movie>{
-
     private static SortedArrayList<String> allCategories;
-
-    static {
-        allCategories = new SortedArrayList<>();
-    }
 
     private String title;
     private String director;
@@ -32,10 +31,12 @@ public class Movie implements Comparable<Movie>{
         this.duration = duration;
         this.categories = categories;
         this.description = description;
+        readInCategories();
     }
 
     public Movie(String title) {
         this.title = title;
+        readInCategories(); //does this method need to be run for this constructor?
     }
 
     public void addCategory(String category) {
@@ -46,9 +47,13 @@ public class Movie implements Comparable<Movie>{
         return categories.size();
     }
 
-    //todo ask Barry about getCategory method (parameter and/or return type wrong?)
     public String getCategory(String category) {
-        return null;
+        for(int catIdx = 0; catIdx < allCategories.size(); catIdx++) {
+            if(allCategories.get(catIdx).equals(category)) {
+                return allCategories.get(catIdx);
+            }
+        }
+        return "Error: Category not found in official category list.";
     }
 
     public SortedArrayList<String> getCategories() {
@@ -56,23 +61,30 @@ public class Movie implements Comparable<Movie>{
     }
 
     public int compareTo(Movie otherMovie) {
-        return this.getTitle().toUpperCase().compareTo(otherMovie.getTitle().toUpperCase());
+        return this.title.toUpperCase().compareTo(otherMovie.getTitle().toUpperCase());
     }
 
     public String toString() {
-        return "Title: " + title + "\n" +
-                "Director: " + director + "\n" +
-                "Cast: " + cast + "\n" +
-                "Type: " + type + "\n" +
-                "Country: " + country + "\n" +
-                "Release Year: " + releaseYear + "\n" +
-                "Rating: " + rating + "\n" +
-                "Duration: " + duration + "\n" +
-                "Categories: " + categories + "\n" +
-                "Description: " + description;
+        return "Title: " + title +
+                ", Director: " + director +
+                ", Release Year: " + releaseYear +
+                ", Categories: " + categories;
     }
 
     public String getTitle() {
         return title;
+    }
+
+    private void readInCategories() {
+        try {
+            Scanner categoryScanner = new Scanner(new File("category.txt"));
+            while(categoryScanner.hasNextLine()) {
+                String oneCategory = categoryScanner.nextLine();
+                allCategories.add(oneCategory);
+            }
+        }
+        catch (FileNotFoundException e){
+            System.out.println("Error: Movie file not found.");
+        }
     }
 }
