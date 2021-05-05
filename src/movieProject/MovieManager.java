@@ -16,9 +16,10 @@ public class MovieManager {
     public static final int DURATION = 7;
     public static final int CATEGORIES = 8;
     public static final int DESCRIPTION = 9;
-    public SortedArrayList<Movie> movies;
+    private SortedArrayList<Movie> movies;
 
     public MovieManager() {
+        movies = new SortedArrayList<Movie>();
         readMoviesFromFile();
     }
 
@@ -26,26 +27,30 @@ public class MovieManager {
         return movies.get(index);
     }
 
-    public Movie[] getMoviesByTitle(String movieTitle) {
-        Movie[] desiredMovies = new Movie[50];
+    public ArrayList<Movie> getMoviesByTitle(String movieTitle) {
+        ArrayList<Movie> desiredMovies = new ArrayList<>(5000);
         int movieListIdx = 0;
         for (int idx = 0; idx < movies.size(); idx++) {
             if (movies.get(idx).getTitle().equals(movieTitle)) {
-                desiredMovies[movieListIdx] = movies.get(idx);
+                desiredMovies.add(movieListIdx, movies.get(idx));
                 movieListIdx++;
             }
         }
         return desiredMovies;
     }
 
-    public Movie[] getMoviesByCategory(String movieCategory) {
-        Movie[] desiredMovies = new Movie[50];
+    public ArrayList<Movie> getMoviesByCategory(String movieCategory) {
+        int maxSize = 5000;
+        ArrayList<Movie> desiredMovies = new ArrayList<>(maxSize);
         int movieListIdx = 0;
         for (int idx = 0; idx < movies.size(); idx++) {
+            if(movieListIdx >= maxSize) {
+                System.out.println("Maximum size of movies by category reached.");
+                break;
+            }
             for (int categoryIdx = 0; categoryIdx < movies.get(idx).getCategoryCount(); categoryIdx++) {
                 if (movies.get(idx).getCategories().get(categoryIdx).equals(movieCategory)) {
-                    desiredMovies[movieListIdx] = movies.get(idx);
-                    movieListIdx++;
+                    desiredMovies.add(movieListIdx++, movies.get(idx));
                 }
             }
         }
