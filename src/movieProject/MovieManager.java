@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.*;
 
 public class MovieManager {
-    public static final String PATH_MOVIE = "src/movieProject/resources/category.txt";
+    public static final String PATH_MOVIE = "src/movieProject/resources/movie.txt";
     public static final int TITLE = 0;
     public static final int DIRECTOR = 1;
     public static final int CAST = 2;

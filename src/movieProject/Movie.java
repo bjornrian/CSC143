@@ -34,7 +34,7 @@ public class Movie implements Comparable<Movie> {
         this.releaseYear = releaseYear;
         this.rating = rating;
         this.duration = duration;
-        this.categories = getOfficialCategories(categories);
+        this.categories = categories; //change back to getOfficialCategories(categories)
         this.description = description;
     }
 
