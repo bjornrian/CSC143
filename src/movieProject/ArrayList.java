@@ -89,10 +89,7 @@ public class ArrayList<E> {
             throw new IndexOutOfBoundsException("index: " + index);
         }
         ensureCapacity(size + 1);
-        for (int i = size; i >= index + 1; i--) {
-            elementData[i] = elementData[i - 1];
-        }
-        //System.arraycopy();//todo
+        System.arraycopy(elementData, index, elementData, index + 1, size-index);
         elementData[index] = value;
         size++;
     }
@@ -101,9 +98,7 @@ public class ArrayList<E> {
     // post: removes value at the given index, shifting subsequent values left
     public void remove(int index) {
         checkIndex(index);
-        for (int i = index; i < size - 1; i++) {
-            elementData[i] = elementData[i + 1];
-        }
+        System.arraycopy(elementData, index + 1, elementData, index, size-index);
         elementData[size - 1] = null;
         size--;
     }
