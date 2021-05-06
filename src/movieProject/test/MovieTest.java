@@ -29,14 +29,11 @@ public class MovieTest {
     }
 
     @Test
-    public void testConstructorAndReadingCategories() {
-        Movie movie = new Movie("Rocky");
-    }
-
-    @Test
     public void testGetCategory() {
         Movie movie = buildMovie();
         assertEquals(3, movie.getCategoryCount());
+        movie.addCategory("Documentaries");
+        assertEquals(4, movie.getCategoryCount());
     }
 
     @Test(expected = RuntimeException.class)

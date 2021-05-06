@@ -4,6 +4,13 @@ package movieProject;
 
 import java.util.*;
 
+/**
+ * This ArrayList class has been copied from the Author, and three methods
+ * have been modified or added. These are toArray(), add(int index, E value),
+ * and remove().
+ *
+ * @param <E> type of element to be stored
+ */
 public class ArrayList<E> {
     private E[] elementData; // list of values
     private int size;        // current number of elements in the list
@@ -81,6 +88,13 @@ public class ArrayList<E> {
         size++;
     }
 
+    /**
+     * This add method utilizes a block copy instead of a loop in order to
+     * add an element at the specified index.
+     *
+     * @param index position of where you want to store the element
+     * @param value element being stored
+     */
     // pre : 0 <= index <= size() (throws IndexOutOfBoundsException if not)
     // post: inserts the given value at the given index, shifting subsequent
     //       values right
@@ -94,6 +108,12 @@ public class ArrayList<E> {
         size++;
     }
 
+    /**
+     * This remove method utilizes a block copy instead of a loop in order
+     * to remove a value at a specified index in the ArrayList.
+     *
+     * @param index position of element you want to remove from the ArrayList.
+     */
     // pre : 0 <= index < size() (throws IndexOutOfBoundsException if not)
     // post: removes value at the given index, shifting subsequent values left
     public void remove(int index) {
@@ -151,7 +171,11 @@ public class ArrayList<E> {
         }
     }
 
-    //todo study this code more
+    /**
+     * This toArray method takes an array and changes the type based on
+     * what is specified by the user.
+     *
+     */
     public <T> T[] toArray(T[] a) {
         if (a.length < size)
             // Returns a new array of type T

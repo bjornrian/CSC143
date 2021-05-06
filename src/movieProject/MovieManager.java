@@ -4,6 +4,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
+/**
+ * This class represents a manager for a list of movies. It can grab movies from
+ * a specified index, title, or category.
+ */
 public class MovieManager {
     public static final String PATH_MOVIE = "src/movieProject/resources/movie.txt";
     public static final int TITLE = 0;
@@ -18,15 +22,33 @@ public class MovieManager {
     public static final int DESCRIPTION = 9;
     private SortedArrayList<Movie> movies;
 
+    /**
+     * Initializes a SortedArrayList of movies that will hold the movies read
+     * from the file.
+     */
     public MovieManager() {
-        movies = new SortedArrayList<Movie>(10000);
+        movies = new SortedArrayList<Movie>(6000);
         readMoviesFromFile();
     }
 
+    /**
+     * This method takes a specified index and returns a movie that is pointed
+     * to on that index of the movies list.
+     *
+     * @param index
+     * @return
+     */
     public Movie getMovie(int index) {
         return movies.get(index);
     }
 
+    /**
+     * This method takes a String movie title, and returns an ArrayList of movies
+     * that share that name.
+     *
+     * @param movieTitle
+     * @return
+     */
     public ArrayList<Movie> getMoviesByTitle(String movieTitle) {
         ArrayList<Movie> desiredMovies = new ArrayList<>(5000);
         int movieListIdx = 0;
@@ -39,6 +61,13 @@ public class MovieManager {
         return desiredMovies;
     }
 
+    /**
+     * This method takes a String movie category, and returns an ArrayList of movies
+     * that share that category.
+     *
+     * @param movieCategory
+     * @return
+     */
     public ArrayList<Movie> getMoviesByCategory(String movieCategory) {
         int maxSize = 5000;
         ArrayList<Movie> desiredMovies = new ArrayList<>(maxSize);
