@@ -16,6 +16,7 @@ public class CircularLinkedListTest {
         playerList.add(siad);
         playerList.add(edward);
         playerList.add(drew);
+        assertEquals("Ildris",((Node) playerList.get(0)).getName());
         System.out.println(playerList.get(0));
     }
 }
