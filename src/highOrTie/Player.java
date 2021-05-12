@@ -1,6 +1,7 @@
 package highOrTie;
 
 import java.util.Objects;
+import java.util.Random;
 
 public class Player {
     private String name;
@@ -18,6 +19,15 @@ public class Player {
 
     public int getNumberOfStrikes() {
         return this.numberOfStrikes;
+    }
+
+    public int getLastRoll() {
+        return this.lastRoll;
+    }
+
+    public void rollDice() {
+        Random rand = new Random();
+        lastRoll = rand.nextInt(100);
     }
 
     public void addStrike() {
