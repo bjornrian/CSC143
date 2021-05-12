@@ -88,17 +88,40 @@ public class CircularLinkedList<E> {
             tail.next = front;
         }
 
-        Node<E> current = front;
+        Node<E> currentNode = front;
         while (pos > 1) {
-            current = current.next;
+            currentNode = currentNode.next;
             pos--;
         }
-        Node<E> nextNode = current.next.next;
-        current.next.next = null;
-        current.next = nextNode;
+        Node<E> nextNode = currentNode.next.next;
+        currentNode.next.next = null;
+        currentNode.next = nextNode;
 
         //update counter
         nodeCount--;
+    }
+
+    public void addAtFront(E data) {
+        Node<E> newNode = new Node<>(data);
+        newNode.next = front;
+        front = newNode;
+    }
+
+    public void addAtEnd(E data) {
+        Node<E> newNode = new Node<>(data);
+        if (front == null) {
+            front = newNode;
+        } else {
+            Node<E> current = front;
+            while (current.next != null) {
+                current = current.next;
+            }
+            current.next = newNode;
+        }
+    }
+
+    public void clear() {
+        front = null;
     }
 
     private void checkIndex(int index) {
