@@ -6,7 +6,33 @@ import static org.junit.Assert.*;
 
 public class CircularLinkedListTest {
     @Test
-    public void testAdd() {
+    public void testAddAndGet() {
+        CircularLinkedList<Player> playerList = buildList();
+        assertEquals("Ildris",((Player) playerList.get(0)).getName());
+        assertEquals("Siad",((Player) playerList.get(1)).getName());
+        assertEquals("Edward",((Player) playerList.get(2)).getName());
+        assertEquals("Drew",((Player) playerList.get(3)).getName());
+    }
+
+    @Test
+    public void testSize() {
+        CircularLinkedList<Player> playerList = buildList();
+        assertEquals(4, playerList.size());
+        playerList.add(new Player("Adi"));
+        assertEquals(5, playerList.size());
+    }
+
+    @Test
+    public void testRemoveValue() {
+
+    }
+
+    @Test
+    public void testRemovePosition() {
+
+    }
+
+    public CircularLinkedList<Player> buildList() {
         CircularLinkedList<Player> playerList = new CircularLinkedList<>();
         Player ildris = new Player("Ildris");
         Player siad = new Player("Siad");
@@ -16,7 +42,6 @@ public class CircularLinkedListTest {
         playerList.add(siad);
         playerList.add(edward);
         playerList.add(drew);
-        assertEquals("Ildris",((Node) playerList.get(0)).getName());
-        System.out.println(playerList.get(0));
+        return playerList;
     }
 }

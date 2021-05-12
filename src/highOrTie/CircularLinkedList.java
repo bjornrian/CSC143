@@ -7,44 +7,71 @@ import java.util.NoSuchElementException;
 
 public class CircularLinkedList<E> {
     private Node<E> front;
+    private Node<E> tail;
 
     public CircularLinkedList() {
         front = null;
+        tail = null;
     }
 
     public int size() {
-        int nodeCount = 0;
-        Node<E> current = front;
-        while(current != null) {
+        int nodeCount = 1;
+        Node<E> current = front.next;
+        while (current != front) {
             current = current.next;
             nodeCount++;
         }
         return nodeCount;
     }
 
-    public Node<E> get(int pos) {
+    public E get(int pos) {
+        checkIndex(pos);
         Node<E> current = front;
-        while(current != null) {
+        while (pos > 0) {
             current = current.next;
             pos--;
         }
-        return current;
+        return current.data;
     }
 
     public void add(E value) {
-        Node<E> current = front;
-        while(current != null) {
-            current = current.next;
+        Node<E> newNode = new Node<E>(value);
+        if (front == null) {
+            front = newNode;
+        } else {
+            tail.next = newNode;
         }
-        current = new Node<E>(value);
+        tail = newNode;
+        tail.next = front;
     }
 
     public void remove(E value) {
-
+        Node<E> newNode = new Node<E>(value);
+        Node<E> current = front.next;
+        if (front.equals(newNode)) {
+            front = null;
+        }
+        while (current != front) {
+            current = current.next;
+        }
     }
 
     public void remove(int pos) {
+        checkIndex(pos);
+        Node<E> current = front;
+        while (pos > 1) {
+            current = current.next;
+            pos--;
+        }
+        current.next = current.next.next;
+        current.next = null;
+    }
 
+    private void checkIndex(int index) {
+        if(index < 0 || index > size()) {
+            throw new IllegalArgumentException("Error: Index/position must be " +
+                    "more than zero and less than list size");
+        }
     }
 
     private class CircularLinkedListIterator<E> implements Iterator<E> {
