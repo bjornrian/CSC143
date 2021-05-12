@@ -1,5 +1,6 @@
 package highOrTie;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Spliterator;
 import java.util.concurrent.TimeUnit;
@@ -9,14 +10,12 @@ public class Game implements Iterable {
     private int playerCount;
     private int maximumStrikes;
     private int pauseLength;
-    private int highestRoll;
     private CircularLinkedList<Player> players;
 
     public Game(int playerCount, int maximumStrikes, int pauseLength) {
         this.playerCount = playerCount;
         this.maximumStrikes = maximumStrikes;
         this.pauseLength = pauseLength;
-        highestRoll = 0;
 
         players = new CircularLinkedList<>();
         for (int i = 1; i <= playerCount; i++) {
@@ -27,8 +26,11 @@ public class Game implements Iterable {
 
     public void play() {
         System.out.println("Start of game");
+        int highestRoll = 0;
+        Player highRoller = null;
+        ArrayList<Integer> indexToBeRemoved = new ArrayList<>();
+
         while (players.size() > 1) {
-            Player highRoller = null;
             for (int i = 0; i < players.size(); i++) {
                 Player currentPlayer = players.get(i);
                 if (currentPlayer.equals(highRoller)) {
@@ -36,39 +38,47 @@ public class Game implements Iterable {
                             currentPlayer.getName() + " passes");
                     continue;
                 }
-                currentPlayer.rollDice();
-                if (currentPlayer.getLastRoll() >= highestRoll) {
+
+                int currentRoll = currentPlayer.roll();
+                if (currentRoll > highestRoll) {
                     highRoller = currentPlayer;
-                    highestRoll = currentPlayer.getLastRoll();
+                    highestRoll = currentRoll;
                     System.out.println("Current high = " + highestRoll + ", " +
-                            currentPlayer.getName() + " rolled a " + currentPlayer.getLastRoll());
-                } else if (currentPlayer.getLastRoll() < highestRoll) {
+                            currentPlayer.getName() + " rolled a " + currentRoll);
+                } else {
                     currentPlayer.addStrike();
                     if (currentPlayer.getNumberOfStrikes() >= maximumStrikes) {
                         System.out.println("Current high = " + highestRoll + ", " +
-                                currentPlayer.getName() + " rolled a " + currentPlayer.getLastRoll() +
+                                currentPlayer.getName() + " rolled a " + currentRoll +
                                 ", strike " + currentPlayer.getNumberOfStrikes() + ", out of the game!");
-                        players.remove(i);
-                        System.out.println("players.size() = " + players.size());
+                        indexToBeRemoved.add(i);
+//                        players.remove(i);
                     } else {
                         System.out.println("Current high = " + highestRoll + ", " +
-                                currentPlayer.getName() + " rolled a " + currentPlayer.getLastRoll() +
+                                currentPlayer.getName() + " rolled a " + currentRoll +
                                 ", strike " + currentPlayer.getNumberOfStrikes());
                     }
                 }
+
                 try {
                     TimeUnit.SECONDS.sleep(pauseLength);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+            }//round ends here
+            if(indexToBeRemoved.size() > 0) {
+                for(Integer index : indexToBeRemoved) {
+                    players.remove(index);
+                }
+                indexToBeRemoved.clear();
             }
+
             if (players.size() > 1) {
-                System.out.println();
-                System.out.println("New Round");
+                System.out.println("\nNew Round");
             }
         }
         System.out.println();
-        System.out.println("Winner is " + players.get(0).getName() + " with a roll of " + players.get(0).getLastRoll() + "!");
+        System.out.println("Winner is " + players.get(0).getName() + " with a roll of " + highestRoll + "!");
     }
 
     @Override

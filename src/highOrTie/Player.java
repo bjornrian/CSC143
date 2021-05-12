@@ -6,7 +6,6 @@ import java.util.Random;
 public class Player {
     private String name;
     private int numberOfStrikes;
-    private int lastRoll;
 
     public Player(String name) {
         this.name = name;
@@ -21,13 +20,9 @@ public class Player {
         return this.numberOfStrikes;
     }
 
-    public int getLastRoll() {
-        return this.lastRoll;
-    }
-
-    public void rollDice() {
+    public int roll() {
         Random rand = new Random();
-        lastRoll = rand.nextInt(100);
+        return rand.nextInt(100);
     }
 
     public void addStrike() {
