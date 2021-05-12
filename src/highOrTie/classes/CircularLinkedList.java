@@ -1,26 +1,45 @@
-package highOrTie;
+package highOrTie.classes;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-
-import javax.xml.soap.Node;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+/**
+ * This class represents a linked list where the last object in the list points
+ * back to the first array in the list. This can be of great use for creating a
+ * game like High or Tie.
+ *
+ * @param <E> type of elements being stored
+ */
 public class CircularLinkedList<E> {
     private Node<E> front;
     private Node<E> tail;
     private int nodeCount;
 
+    /**
+     * Constructor initializes a circular linked list
+     */
     public CircularLinkedList() {
         front = null;
         tail = null;
         nodeCount = 0;
     }
 
+    /**
+     * @return amount of nodes/items in the list
+     */
     public int size() {
         return nodeCount;
     }
 
+    /**
+     * This method takes an index position and returns the
+     * data that the node in that position holds. If the
+     * position is out of bounds, an illegal argument
+     * exception will be shown.
+     *
+     * @param pos index of desired node
+     * @return data of desired node
+     */
     public E get(int pos) {
         checkIndex(pos);
         Node<E> current = front;
@@ -31,6 +50,13 @@ public class CircularLinkedList<E> {
         return current.data;
     }
 
+    /**
+     * This method takes a value of type E and adds a node
+     * with this value as its data in the linked list.
+     *
+     * @param value data being put into node being added to
+     *              list
+     */
     public void add(E value) {
         Node<E> newNode = new Node<E>(value);
         if (front == null) {
@@ -43,7 +69,13 @@ public class CircularLinkedList<E> {
         nodeCount++;
     }
 
-    public void remove(E valueToDelete) {
+    /**
+     * This method removes a node if it holds the data that
+     * the user inputs.
+     *
+     * @param value data being searched for and removed
+     */
+    public void remove(E value) {
         boolean wasRemoved = false;
         Node<E> currentNode = front;
         if (front == null) {
@@ -53,7 +85,7 @@ public class CircularLinkedList<E> {
 
         do {
             Node<E> nextNode = currentNode.next;
-            if (nextNode.data.equals(valueToDelete)) {
+            if (nextNode.data.equals(value)) {
                 if (tail == front) {
                     //list has only one element
                     front = null;
@@ -79,6 +111,11 @@ public class CircularLinkedList<E> {
         if (wasRemoved) nodeCount--;
     }
 
+    /**
+     * This method removes a node by index.
+     *
+     * @param pos index of node being removed
+     */
     public void remove(int pos) {
         checkIndex(pos);
 
@@ -101,12 +138,24 @@ public class CircularLinkedList<E> {
         nodeCount--;
     }
 
+    /**
+     * This method adds a note at the front of the linked list
+     * with the data desired.
+     *
+     * @param data value being stored in node
+     */
     public void addAtFront(E data) {
         Node<E> newNode = new Node<>(data);
         newNode.next = front;
         front = newNode;
     }
 
+    /**
+     * This method adds a note at the end of the linked list
+     * with the data desired.
+     *
+     * @param data value being stored in node
+     */
     public void addAtEnd(E data) {
         Node<E> newNode = new Node<>(data);
         if (front == null) {
@@ -120,10 +169,20 @@ public class CircularLinkedList<E> {
         }
     }
 
+    /**
+     * Clears entire linked list.
+     */
     public void clear() {
         front = null;
     }
 
+    /**
+     * This private method checks an index being input by
+     * the user and sees if it is within the acceptable
+     * range of the list size.
+     *
+     * @param index being range checked
+     */
     private void checkIndex(int index) {
         if (index < 0 || index > size()) {
             throw new IllegalArgumentException("Error: Index/position must be " +

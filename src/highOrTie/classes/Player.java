@@ -1,4 +1,4 @@
-package highOrTie;
+package highOrTie.classes;
 
 import java.util.Objects;
 import java.util.Random;

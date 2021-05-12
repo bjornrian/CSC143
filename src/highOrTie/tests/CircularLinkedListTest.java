@@ -1,5 +1,7 @@
-package highOrTie;
+package highOrTie.tests;
 
+import highOrTie.classes.CircularLinkedList;
+import highOrTie.classes.Player;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
