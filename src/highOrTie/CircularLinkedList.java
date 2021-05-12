@@ -1,26 +1,23 @@
 package highOrTie;
 
-import movieProject.ArrayList;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 
+import javax.xml.soap.Node;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class CircularLinkedList<E> {
     private Node<E> front;
     private Node<E> tail;
+    private int nodeCount;
 
     public CircularLinkedList() {
         front = null;
         tail = null;
+        nodeCount = 0;
     }
 
     public int size() {
-        int nodeCount = 1;
-        Node<E> current = front.next;
-        while (current != front) {
-            current = current.next;
-            nodeCount++;
-        }
         return nodeCount;
     }
 
@@ -43,32 +40,69 @@ public class CircularLinkedList<E> {
         }
         tail = newNode;
         tail.next = front;
+        nodeCount++;
     }
 
-    public void remove(E value) {
-        Node<E> newNode = new Node<E>(value);
-        Node<E> current = front.next;
-        if (front.equals(newNode)) {
-            front = null;
+    public void remove(E valueToDelete) {
+        boolean wasRemoved = false;
+        Node<E> currentNode = front;
+        if (front == null) {
+            //empty list
+            return;
         }
-        while (current != front) {
-            current = current.next;
-        }
+
+        do {
+            Node<E> nextNode = currentNode.next;
+            if (nextNode.data.equals(valueToDelete)) {
+                if (tail == front) {
+                    //list has only one element
+                    front = null;
+                    tail = null;
+                } else {
+                    currentNode.next = nextNode.next;
+                    if (front == nextNode) {
+                        //delete the front element
+                        front = front.next;
+                    }
+                    if (tail == nextNode) {
+                        //delete the tail element
+                        tail = currentNode;
+                    }
+                }
+                wasRemoved = true;
+                break;
+            }
+            currentNode = nextNode;
+        } while (currentNode != front);
+
+        //update counter
+        if (wasRemoved) nodeCount--;
     }
 
     public void remove(int pos) {
         checkIndex(pos);
+
+        //we want to remove the head element
+        if (pos == 0) {
+            front = front.next;
+            tail.next = front;
+        }
+
         Node<E> current = front;
         while (pos > 1) {
             current = current.next;
             pos--;
         }
-        current.next = current.next.next;
-        current.next = null;
+        Node<E> nextNode = current.next.next;
+        current.next.next = null;
+        current.next = nextNode;
+
+        //update counter
+        nodeCount--;
     }
 
     private void checkIndex(int index) {
-        if(index < 0 || index > size()) {
+        if (index < 0 || index > size()) {
             throw new IllegalArgumentException("Error: Index/position must be " +
                     "more than zero and less than list size");
         }
@@ -117,6 +151,7 @@ public class CircularLinkedList<E> {
     private static class Node<E> {
         public E data;
         public Node<E> next;
+
         public Node(E data) {
             this.data = data;
             this.next = null;

@@ -20,4 +20,13 @@ public class Player {
     public void addStrike() {
         numberOfStrikes++;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if(this == o) return true;
+        if(o == null) return false;
+        if(getClass() != o.getClass()) return false;
+        Player p = (Player) o;
+        return this.name.equals(p.getName());
+    }
 }
