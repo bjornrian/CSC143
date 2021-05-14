@@ -5,7 +5,7 @@ import wearableDevices.classes.Wearable;
 
 import static org.junit.Assert.*;
 
-public class TestWearable {
+public class WearableTest {
     @Test
     public void testAccessors() {
         Wearable testWearable = new Wearable(133, "FitBit", 55.99,

@@ -7,8 +7,11 @@ public class Index<K> implements Comparable {
         root = null;
     }
 
-    public void put() {
-
+    public void  put(K data, int position) {
+        Node<K> newNode = new Node<>(data, position);
+        if(root == null) {
+            root = newNode;
+        }
     }
 
     public int get(K data) {
@@ -31,8 +34,9 @@ public class Index<K> implements Comparable {
         public Node<K> right;
         public DupNode same;
 
-        public Node(K data) {
+        public Node(K data, int position) {
             this.data = data;
+            this.position = position;
         }
     }
 

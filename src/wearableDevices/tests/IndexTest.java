@@ -1,4 +1,4 @@
 package wearableDevices.tests;
 
-public class TestIndex {
+public class IndexTest {
 }
