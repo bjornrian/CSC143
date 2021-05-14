@@ -4,8 +4,10 @@ import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
+import java.util.Scanner;
 
 public class WearableManager {
+    private String PATH_WEARABLES = "src/wearableDevices/resources/Wearables.txt";
     private Wearable[] wearableList;
     private int wearableListLength; //first scan.nextInt value in Wearable.txt
     private Index<Integer> rankingPositionData;
@@ -35,7 +37,7 @@ public class WearableManager {
     public Boolean generateCsv(int[] positions, String filename) throws FileNotFoundException {
         File file = new File(filename);
         PrintStream fileOut = new PrintStream(file);
-        for(int position : positions) {
+        for (int position : positions) {
             fileOut.print(wearableList[position].getRanking());
             fileOut.print("\"" + wearableList[position].getName() + "\"");
             fileOut.print(wearableList[position].getPrice());
@@ -53,6 +55,24 @@ public class WearableManager {
     }
 
     private void readWearableFile() {
-        wearableList = new Wearable[wearableListLength];
+        try {
+            Scanner fileIn = new Scanner(new File(PATH_WEARABLES));
+            wearableListLength = fileIn.nextInt();
+            wearableList = new Wearable[wearableListLength];
+            fileIn.nextLine();
+            fileIn.nextLine();
+            for (int lineNum = 0; lineNum < wearableListLength; lineNum++) {
+                String line = fileIn.nextLine();
+                String[] characteristics = line.split("@");
+                Wearable oneWearable = new Wearable( Integer.parseInt(characteristics[0]),
+                        characteristics[1], Double.parseDouble(characteristics[2]),
+                        characteristics[3], characteristics[4], characteristics[5],
+                        characteristics[6], characteristics[7], characteristics[8],
+                        characteristics[9],  characteristics[10]);
+                wearableList[lineNum] = oneWearable;
+            }
+        } catch (FileNotFoundException e) {
+            wearableList = new Wearable[0];
+        }
     }
 }
