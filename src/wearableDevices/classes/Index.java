@@ -1,6 +1,6 @@
 package wearableDevices.classes;
 
-public class Index<K> implements Comparable {
+public class Index<K> {
     private Node<K> root;
 
     public Index() {
@@ -22,11 +22,6 @@ public class Index<K> implements Comparable {
         return null;
     }
 
-    @Override
-    public int compareTo(Object otherData) {
-        return 0;
-    }
-
     private static class Node<K> {
         public K data;
         public int position;
@@ -37,6 +32,10 @@ public class Index<K> implements Comparable {
         public Node(K data, int position) {
             this.data = data;
             this.position = position;
+        }
+
+        public int compareTo() {
+            return -1;
         }
     }
 
