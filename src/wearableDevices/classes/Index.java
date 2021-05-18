@@ -2,6 +2,7 @@ package wearableDevices.classes;
 
 public class Index<K extends Comparable<K>> {
     private Node<K> root;
+    private int indexSize;
 
     public Index() {
         root = null;
@@ -10,6 +11,7 @@ public class Index<K extends Comparable<K>> {
     //COMPLETELY CHANGE THIS
     //todo check data and position variable placing
     public void put(K data, int position) {
+        indexSize++;
         if (root == null) {
             root = new Node<>(data, position);
             return;
@@ -58,7 +60,7 @@ public class Index<K extends Comparable<K>> {
     }
 
     public int[] getPositionData() {
-        int[] posList = new int[1000];
+        int[] posList = new int[indexSize];
         Node<K> current;
         Node<K> previous;
         int currentIndex = 0;
