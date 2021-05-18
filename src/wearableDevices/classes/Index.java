@@ -57,52 +57,37 @@ public class Index<K extends Comparable<K>> {
         }
     }
 
-    //display node position data with in-order method
-//    public int[] getPositionData() {
-//        int[] posList = new int[100];
-//        if (root == null) {
-//            return new int[0];
-//        }
-//        Node<K> p = root;
-//
-//        while (p != null) {
-//            while (p.left != null) {
-//                p = p.left;
-//            }
-//            System.out.print(p.data + " ");
-//            p = p.right;
-//        }
-//        return posList;
-//    }
-
     public int[] getPositionData() {
-        int[] posList = new int[100];
-        Node<K> current = root;
-        Node<K> pre;
-
+        int[] posList = new int[1000];
+        Node<K> current;
+        Node<K> previous;
+        int currentIndex = 0;
         if (root == null) {
             return new int[0];
         }
+
+        current = root;
         while (current != null) {
             if (current.left == null) {
-                System.out.print(current.data + " ");
+                posList[currentIndex] = current.position;
+                currentIndex++;
                 current = current.right;
             } else {
-                pre = current.left;
-                while (pre.right != null
-                        && pre.right != current)
-                    pre = pre.right;
+                previous = current.left;
+                while (previous.right != null && previous.right != current) {
+                    previous = previous.right;
+                }
 
-                if (pre.right == null) {
-                    pre.right = current;
+                if (previous.right == null) {
+                    previous.right = current;
                     current = current.left;
                 } else {
-                    pre.right = null;
-                    System.out.print(current.data + " ");
+                    previous.right = null;
+                    posList[currentIndex] = current.position;
+                    currentIndex++;
                     current = current.right;
                 }
             }
-
         }
         return posList;
     }
