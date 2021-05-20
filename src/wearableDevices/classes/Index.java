@@ -8,109 +8,54 @@ public class Index<K extends Comparable<K>> {
         root = null;
     }
 
+    public void put(K data, int position) {
+        root = put(data, position, root);
+    }
+
     //COMPLETELY CHANGE THIS
     //todo check data and position variable placing
-    public void put(K data, int position) {
-        indexSize++;
-        if (root == null) {
-            root = new Node<>(data, position);
-            return;
+    public Node<K> put(K data, int position, Node<K> startNode) {
+        if (startNode == null) {
+            startNode = new Node<>(data, position);
+        } else if (data.compareTo(startNode.data) < 0) {
+            startNode.left = put(data, position, startNode.left);
+        } else {
+            startNode.right = put(data, position, startNode.right);
         }
-        Node<K> p = root;
-        while (true) {
-            if (data.compareTo(p.data) < 0) {
-                if (p.left == null) {
-                    p.left = new Node<>(data, position);
-                    return;
-                } else
-                    p = p.left;
-            } else if (data.compareTo(p.data) > 0) {
-                if (p.right == null) {
-                    p.right = new Node<>(data, position);
-                    return;
-                } else
-                    p = p.right;
-            } else { // k already in the tree, update its value
-                /*
-                VERY QUESTIONABLE CODE!!!
-                 */
-                DupNode dup = new DupNode(position);
-                while (p.same != null) {
-                    p.same = p.same.same;
-                }
-                p.same = dup;
-                return;
-            }
-        }
+        return startNode;
     }
 
     public int get(K data) {
-        if (root == null) {
-            return -1;
-        }
-        Node<K> p = root;
-        while (true) {
-            if (data.compareTo(p.data) < 0) {
-                if (p.left == null) {
-                    return -1;
-                } else
-                    p = p.left;
-            } else if (data.compareTo(p.data) > 0) {
-                if (p.right == null) {
-                    return -1;
-                } else
-                    p = p.right;
-            } else { // the corresponding position for the data is found and returned
-                return p.position;
-            }
+        return get(data, root);
+    }
+
+    public int get(K data, Node<K> startNode) {
+        if (startNode.data == data) {
+            return startNode.position;
+        } else if (data.compareTo(startNode.data) < 0) {
+            return get(data, startNode.left);
+        } else {
+            return get(data, startNode.right);
         }
     }
 
     public int[] getPositionData() {
+        return getPositionData(0, root);
+    }
+
+    public int[] getPositionData(int index, Node<K> startNode) {
         int[] posList = new int[indexSize];
-        Node<K> current;
-        Node<K> previous;
-        DupNode currentDup;
-        int currentIndex = 0;
         if (root == null) {
             return new int[0];
         }
 
-        current = root;
-        while (current != null) {
-            if (current.left == null) {
-                posList[currentIndex] = current.position;
-                currentIndex++;
-                currentDup = current.same;
-                while(currentDup != null) {
-                    posList[currentIndex] = currentDup.position;
-                    currentIndex++;
-                    currentDup = currentDup.same;
-                }
-                current = current.right;
-            } else {
-                previous = current.left;
-                while (previous.right != null && previous.right != current) {
-                    previous = previous.right;
-                }
+        getPositionData(index, root.left);
 
-                if (previous.right == null) {
-                    previous.right = current;
-                    current = current.left;
-                } else {
-                    previous.right = null;
-                    posList[currentIndex] = current.position;
-                    currentIndex++;
-                    currentDup = current.same;
-                    while(currentDup != null) {
-                        posList[currentIndex] = currentDup.position;
-                        currentIndex++;
-                        currentDup = currentDup.same;
-                    }
-                    current = current.right;
-                }
-            }
-        }
+        posList[index] = root.position;
+
+        // Traverse the right subtree
+        getPositionData(index, root.right);
+
         return posList;
     }
 
