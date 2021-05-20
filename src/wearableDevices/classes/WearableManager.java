@@ -76,7 +76,7 @@ public class WearableManager {
         }
     }
 
-    private void addPositionData() {
+    private void addPositionData() {//todo should be done while reading the file and building master list
         for (int index = 0; index < wearableListLength; index++) {
             rankingPositionData.put(wearableList[index].getRanking(), index);
             pricePositionData.put(wearableList[index].getPrice(), index);

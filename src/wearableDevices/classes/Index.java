@@ -31,7 +31,14 @@ public class Index<K extends Comparable<K>> {
                 } else
                     p = p.right;
             } else { // k already in the tree, update its value
-                p.position = position;
+                /*
+                VERY QUESTIONABLE CODE!!!
+                 */
+                DupNode dup = new DupNode(position);
+                while (p.same != null) {
+                    p.same = p.same.same;
+                }
+                p.same = dup;
                 return;
             }
         }

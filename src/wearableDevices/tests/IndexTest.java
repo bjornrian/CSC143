@@ -3,9 +3,6 @@ package wearableDevices.tests;
 import org.junit.Test;
 import wearableDevices.classes.Index;
 import wearableDevices.classes.Wearable;
-import wearableDevices.classes.WearableManager;
-
-import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
