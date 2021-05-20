@@ -63,6 +63,7 @@ public class Index<K extends Comparable<K>> {
         int[] posList = new int[indexSize];
         Node<K> current;
         Node<K> previous;
+        DupNode currentDup;
         int currentIndex = 0;
         if (root == null) {
             return new int[0];
@@ -73,6 +74,12 @@ public class Index<K extends Comparable<K>> {
             if (current.left == null) {
                 posList[currentIndex] = current.position;
                 currentIndex++;
+                currentDup = current.same;
+                while(currentDup != null) {
+                    posList[currentIndex] = currentDup.position;
+                    currentIndex++;
+                    currentDup = currentDup.same;
+                }
                 current = current.right;
             } else {
                 previous = current.left;
@@ -87,6 +94,12 @@ public class Index<K extends Comparable<K>> {
                     previous.right = null;
                     posList[currentIndex] = current.position;
                     currentIndex++;
+                    currentDup = current.same;
+                    while(currentDup != null) {
+                        posList[currentIndex] = currentDup.position;
+                        currentIndex++;
+                        currentDup = currentDup.same;
+                    }
                     current = current.right;
                 }
             }
