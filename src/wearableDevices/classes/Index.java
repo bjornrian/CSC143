@@ -40,23 +40,16 @@ public class Index<K extends Comparable<K>> {
     }
 
     public int[] getPositionData() {
-        return getPositionData(0, root);
+        return getPositionData(root);
     }
 
-    public int[] getPositionData(int index, Node<K> startNode) {
-        int[] posList = new int[indexSize];
-        if (root == null) {
-            return new int[0];
+    public int[] getPositionData(Node<K> startNode) {
+        if (startNode != null) {
+            getPositionData(startNode.left);
+            System.out.print(startNode.position + ", ");
+            getPositionData(startNode.right);
         }
-
-        getPositionData(index, root.left);
-
-        posList[index] = root.position;
-
-        // Traverse the right subtree
-        getPositionData(index, root.right);
-
-        return posList;
+        return new int[0];
     }
 
     private static class Node<K> {
