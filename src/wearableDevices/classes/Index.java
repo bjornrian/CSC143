@@ -3,6 +3,8 @@ package wearableDevices.classes;
 public class Index<K extends Comparable<K>> {
     private Node<K> root;
     private int indexSize;
+    private int[] positionList;
+    private int positionListIndex;
 
     public Index() {
         root = null;
@@ -17,6 +19,7 @@ public class Index<K extends Comparable<K>> {
     public Node<K> put(K data, int position, Node<K> startNode) {
         if (startNode == null) {
             startNode = new Node<>(data, position);
+            indexSize++;
         } else if (data.compareTo(startNode.data) < 0) {
             startNode.left = put(data, position, startNode.left);
         } else {
@@ -40,18 +43,19 @@ public class Index<K extends Comparable<K>> {
     }
 
     public int[] getPositionData() {
-        return getPositionData(root);
+        positionList = new int[indexSize];
+        collectPositionData(root);
+        return positionList;
     }
 
-    public int[] getPositionData(Node<K> startNode) {
+    public void collectPositionData(Node<K> startNode) {
         if (startNode == null) {
-            return new int[0];
+            return;
         }
-        getPositionData(startNode.left);
-        System.out.print(startNode.position + ", ");
-        getPositionData(startNode.right);
-
-        return new int[0];
+        collectPositionData(startNode.left);
+        positionList[positionListIndex] = startNode.position;
+        positionListIndex++;
+        collectPositionData(startNode.right);
     }
 
     private static class Node<K> {

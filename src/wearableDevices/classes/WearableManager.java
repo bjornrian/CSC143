@@ -52,18 +52,21 @@ public class WearableManager {
     public Boolean generateCsv(int[] positions, String filename) throws FileNotFoundException {
         File file = new File(filename);
         PrintStream fileOut = new PrintStream(file);
+        fileOut.println("Ranking, Name, Price, Body Location, Category, Company Name, " +
+                "Company URL, Company Location, Company City, Company US State, Company Country");
         for (int position : positions) {
-            fileOut.print(wearableList[position].getRanking());
-            fileOut.print("\"" + wearableList[position].getName() + "\"");
-            fileOut.print(wearableList[position].getPrice());
-            fileOut.print("\"" + wearableList[position].getBodyLocation() + "\"");
-            fileOut.print("\"" + wearableList[position].getCategory() + "\"");
-            fileOut.print("\"" + wearableList[position].getCompanyName() + "\"");
-            fileOut.print("\"" + wearableList[position].getCompanyURL() + "\"");
-            fileOut.print("\"" + wearableList[position].getCompanyMappingLocation() + "\"");
-            fileOut.print("\"" + wearableList[position].getCompanyCity() + "\"");
-            fileOut.print("\"" + wearableList[position].getCompanyUSState() + "\"");
-            fileOut.print("\"" + wearableList[position].getCompanyCountry() + "\"");
+            fileOut.print(wearableList[position].getRanking() + ", ");
+            fileOut.print("\"" + wearableList[position].getName() + "\", ");
+            fileOut.print(wearableList[position].getPrice() + ", ");
+            fileOut.print("\"" + wearableList[position].getBodyLocation() + "\", ");
+            fileOut.print("\"" + wearableList[position].getCategory() + "\", ");
+            fileOut.print("\"" + wearableList[position].getCompanyName() + "\", ");
+            fileOut.print("\"" + wearableList[position].getCompanyURL() + "\", ");
+            fileOut.print("\"" + wearableList[position].getCompanyMappingLocation() + "\", ");
+            fileOut.print("\"" + wearableList[position].getCompanyCity() + "\", ");
+            fileOut.print("\"" + wearableList[position].getCompanyUSState() + "\", ");
+            fileOut.print("\"" + wearableList[position].getCompanyCountry() + "\", ");
+            fileOut.println();
         }
         fileOut.close();
         return true;

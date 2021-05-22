@@ -15,7 +15,6 @@ import static org.junit.Assert.assertEquals;
  * int[] getRankingPositionData()
  * int[] getPricePositionData()
  * int[] getCoNamePositionData()
- * boolean generateCsv(int[] positions, String filename)
  */
 public class WearableManagerTest {
     private static final String PATH = "src/wearableDevices/tests/WearablesSample.txt";
@@ -44,39 +43,29 @@ public class WearableManagerTest {
     public void testGetRankingPositionData() {
         int[] rankingPositionData = manager.getRankingPositionData();
         assertEquals(10, rankingPositionData.length);
+        int[] positionList = new int[]{4, 9, 0, 7, 6, 3, 5, 1, 2, 8};
+        for (int index = 0; index < rankingPositionData.length; index++) {
+            assertEquals(positionList[index], rankingPositionData[index]);
+        }
     }
 
     @Test
     public void testGetPricingPositionData() {
-        //todo
-//        int[] pricingPositionData = manager.getPricingPositionData();
+        int[] pricingPositionData = manager.getPricingPositionData();
+        assertEquals(10, pricingPositionData.length);
+        int[] positionList = new int[]{7, 9, 8, 4, 5, 0, 1, 3, 2, 6};
+        for (int index = 0; index < pricingPositionData.length; index++) {
+            assertEquals(positionList[index], pricingPositionData[index]);
+        }
     }
 
     @Test
     public void testGetCoNamePositionData() {
-        //todo
-//        int[] coNamePositionData = manager.getCoNamePositionData();
+        int[] coNamePositionData = manager.getCoNamePositionData();
+        assertEquals(10, coNamePositionData.length);
+        int[] positionList = new int[]{0, 1, 2, 3, 4, 6, 7, 8, 9, 5};
+        for (int index = 0; index < coNamePositionData.length; index++) {
+            assertEquals(positionList[index], coNamePositionData[index]);
+        }
     }
-
-    @Test
-    public void testGenerateCsvForRanking() throws FileNotFoundException {
-        //todo
-//        int[] rankingPositionData = manager.getRankingPositionData();
-//        Boolean myCsvFile = manager.generateCsv(rankingPositionData, "myCsvFile");
-    }
-
-    @Test
-    public void testGenerateCsvForPricing() throws FileNotFoundException {
-        //todo
-//        int[] pricingPositionData = manager.getPricingPositionData();
-//        Boolean myCsvFile = manager.generateCsv(pricingPositionData, "myCsvFile");
-    }
-
-    @Test
-    public void testGenerateCsvForCompanyName() throws FileNotFoundException {
-        //todo
-//        int[] coNamePositionData = manager.getCoNamePositionData();
-//        Boolean myCsvFile = manager.generateCsv(coNamePositionData, "myCsvFile");
-    }
-
 }
