@@ -1,0 +1,12 @@
+10
+Ranking@Name@Price@Body.Location@Category@Company.Name@Company.URL@Company...Mapping.Location@Company...City@Company...U.S..State@Company...Country
+281@Garmin Vivofita,, Fitness Band With Heart Rate Monitor@169.99@Wrist@Fitness@Garmin@http://www.garmin.com/@Olathe, Kansas, United States@Olathe@Kansas@United States
+513@Garmin vI_vosmart - Large - activity tracker - monochrome - Bluetooth, ANT/ANT+ - 0.7 oz - purple@169.99@Wrist@Fitness@Garmin@http://www.garmin.com/@Olathe, Kansas, United States@Olathe@Kansas@United States
+539@Garmin vI_vosmart - Small - activity tracker - monochrome - Bluetooth, ANT/ANT+ - 0.7 oz - black - with heart rate monitor@199.99@Wrist@Fitness@Garmin@http://www.garmin.com/@Olathe, Kansas, United States@Olathe@Kansas@United States
+495@Garmin vI_vosmart - Small - activity tracker - monochrome - Bluetooth, ANT/ANT+ - 0.7 oz - slate@169.99@Wrist@Fitness@Garmin@http://www.garmin.com/@Olathe, Kansas, United States@Olathe@Kansas@United States
+29@Generic vg260 portable wireless video glasses eyewear mobile theatre w DHgate@130.69@Head@Entertainment@Generic@Unknown@Unknown@Unknown@Unknown@Unknown
+512@Genuine Samsung Smart Watch For Galaxy Note 3 Gear Fit Galaxy S5 S4@149.99@Wrist@Lifestyle@Samsung@http://www.samsung.com/@Seoul, South Korea@Seoul@Non-US@South Korea
+408@Gerbing Men's Battery Heated Fleece Jacket - Black@229.99@Torso@Lifestyle@Gerbing@http://gerbing.com/@Stoneville, North Carolina, United States@Stoneville@North Carolina@United States
+349@Gibi Pet Location GPS Service Unit@-99.99@Neck@Pets and Animals@Gibi@http://gibitechnologies.com@Menlo Park, California, United States@Menlo Park@California@United States
+556@GoFit GF-WTSLD Power Sled with Harness & Strap@91.99@Torso@Fitness@Gofit@http://www.gofit.net/@Tulsa, Oklahoma, United States@Tulsa@Oklahoma@United States
+168@GoHeart Heart Rate Monitor GH100-US@40.52@Chest@Lifestyle, Fitness@Papago@http://us.papagoinc.com/@Taipei, Taiwan@Taipei@Non-US@Taiwan

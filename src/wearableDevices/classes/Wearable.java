@@ -73,4 +73,21 @@ public class Wearable {
     public String getCompanyCountry() {
         return companyCountry;
     }
+
+    @Override
+    public String toString() {
+        return "Wearable{" +
+                "ranking=" + ranking +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", bodyLocation='" + bodyLocation + '\'' +
+                ", category='" + category + '\'' +
+                ", companyName='" + companyName + '\'' +
+                ", companyURL='" + companyURL + '\'' +
+                ", companyMappingLocation='" + companyMappingLocation + '\'' +
+                ", companyCity='" + companyCity + '\'' +
+                ", companyUSState='" + companyUSState + '\'' +
+                ", companyCountry='" + companyCountry + '\'' +
+                '}';
+    }
 }

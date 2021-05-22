@@ -6,7 +6,7 @@ import java.io.PrintStream;
 import java.util.Scanner;
 
 public class WearableManager {
-    private String PATH_WEARABLES = "src/wearableDevices/resources/Wearables.txt";
+    private static final String PATH_WEARABLES = "src/wearableDevices/resources/Wearables.txt";
     private Wearable[] wearableList;
     private int wearableListLength; //first scan.nextInt value in Wearable.txt
     private Index<Integer> rankingPositionData = new Index<>();
@@ -14,7 +14,11 @@ public class WearableManager {
     private Index<String> coNamePositionData = new Index<>();
 
     public WearableManager() {
-        readWearableFile();
+        this(PATH_WEARABLES);
+    }
+
+    public WearableManager(String path) {
+        readWearableFile(path);
         addPositionData();
     }
 
@@ -34,6 +38,17 @@ public class WearableManager {
         return coNamePositionData.getPositionData();
     }
 
+    /**
+     * Strings containing dangerous characters
+     * (especially commas and quotation marks)
+     * should themselves be surrounded by quotation marks,
+     * with interior quotation marks doubled.
+     *
+     * @param positions
+     * @param filename
+     * @return
+     * @throws FileNotFoundException
+     */
     public Boolean generateCsv(int[] positions, String filename) throws FileNotFoundException {
         File file = new File(filename);
         PrintStream fileOut = new PrintStream(file);
@@ -54,9 +69,9 @@ public class WearableManager {
         return true;
     }
 
-    private void readWearableFile() {
+    private void readWearableFile(String path) {
         try {
-            Scanner fileIn = new Scanner(new File(PATH_WEARABLES));
+            Scanner fileIn = new Scanner(new File(path));
             wearableListLength = fileIn.nextInt();
             wearableList = new Wearable[wearableListLength];
             fileIn.nextLine();

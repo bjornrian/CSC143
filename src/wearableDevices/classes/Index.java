@@ -44,11 +44,13 @@ public class Index<K extends Comparable<K>> {
     }
 
     public int[] getPositionData(Node<K> startNode) {
-        if (startNode != null) {
-            getPositionData(startNode.left);
-            System.out.print(startNode.position + ", ");
-            getPositionData(startNode.right);
+        if (startNode == null) {
+            return new int[0];
         }
+        getPositionData(startNode.left);
+        System.out.print(startNode.position + ", ");
+        getPositionData(startNode.right);
+
         return new int[0];
     }
 
