@@ -55,21 +55,30 @@ public class WearableManager {
         fileOut.println("Ranking, Name, Price, Body Location, Category, Company Name, " +
                 "Company URL, Company Location, Company City, Company US State, Company Country");
         for (int position : positions) {
-            fileOut.print(wearableList[position].getRanking() + ", ");
-            fileOut.print("\"" + wearableList[position].getName() + "\", ");
-            fileOut.print(wearableList[position].getPrice() + ", ");
-            fileOut.print("\"" + wearableList[position].getBodyLocation() + "\", ");
-            fileOut.print("\"" + wearableList[position].getCategory() + "\", ");
-            fileOut.print("\"" + wearableList[position].getCompanyName() + "\", ");
-            fileOut.print("\"" + wearableList[position].getCompanyURL() + "\", ");
-            fileOut.print("\"" + wearableList[position].getCompanyMappingLocation() + "\", ");
-            fileOut.print("\"" + wearableList[position].getCompanyCity() + "\", ");
-            fileOut.print("\"" + wearableList[position].getCompanyUSState() + "\", ");
-            fileOut.print("\"" + wearableList[position].getCompanyCountry() + "\", ");
+            fileOut.print(wearableList[position].getRanking() + ",");
+            fileOut.print(addQuotationMarks(wearableList[position].getName(), true));
+            fileOut.print(wearableList[position].getPrice() + ",");
+            fileOut.print(addQuotationMarks(wearableList[position].getBodyLocation(), true));
+            fileOut.print(addQuotationMarks(wearableList[position].getCategory(), true));
+            fileOut.print(addQuotationMarks(wearableList[position].getCompanyName(), true));
+            fileOut.print(addQuotationMarks(wearableList[position].getCompanyURL(), true));
+            fileOut.print(addQuotationMarks(wearableList[position].getCompanyMappingLocation(), true));
+            fileOut.print(addQuotationMarks(wearableList[position].getCompanyCity(), true));
+            fileOut.print(addQuotationMarks(wearableList[position].getCompanyUSState(), true));
+            fileOut.print(addQuotationMarks(wearableList[position].getCompanyCountry(), false));
             fileOut.println();
         }
         fileOut.close();
         return true;
+    }
+
+    private String addQuotationMarks(String value, boolean addComma) {
+        value = value.replace("\"", "\"\"");
+        value = "\"" + value.replace(",", "','");
+        if(addComma) {
+            value = value + "\",";
+        } else value = value + "\"";
+        return value;
     }
 
     private void readWearableFile(String path) {

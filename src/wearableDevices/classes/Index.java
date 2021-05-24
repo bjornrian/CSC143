@@ -1,5 +1,10 @@
 package wearableDevices.classes;
 
+/**
+ * This represents a tree map that
+ *
+ * @param <K>
+ */
 public class Index<K extends Comparable<K>> {
     private Node<K> root;
     private int indexSize;
@@ -14,8 +19,6 @@ public class Index<K extends Comparable<K>> {
         root = put(data, position, root);
     }
 
-    //COMPLETELY CHANGE THIS
-    //todo check data and position variable placing
     public Node<K> put(K data, int position, Node<K> startNode) {
         if (startNode == null) {
             startNode = new Node<>(data, position);
@@ -33,6 +36,9 @@ public class Index<K extends Comparable<K>> {
     }
 
     public int get(K data, Node<K> startNode) {
+        if(startNode == null) {
+            return -1;
+        }
         if (startNode.data == data) {
             return startNode.position;
         } else if (data.compareTo(startNode.data) < 0) {
@@ -43,6 +49,7 @@ public class Index<K extends Comparable<K>> {
     }
 
     public int[] getPositionData() {
+        positionListIndex = 0;
         positionList = new int[indexSize];
         collectPositionData(root);
         return positionList;

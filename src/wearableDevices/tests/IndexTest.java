@@ -4,6 +4,8 @@ import org.junit.Test;
 import wearableDevices.classes.Index;
 import wearableDevices.classes.Wearable;
 
+import java.util.Arrays;
+
 import static org.junit.Assert.*;
 
 public class IndexTest {

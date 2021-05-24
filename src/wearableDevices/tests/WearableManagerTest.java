@@ -7,6 +7,7 @@ import wearableDevices.classes.WearableManager;
 import java.io.FileNotFoundException;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Testing the main methods:
@@ -37,6 +38,16 @@ public class WearableManagerTest {
         assertEquals(349, manager.getWearableAtIndex(7).getRanking());
         assertEquals("Torso", manager.getWearableAtIndex(8).getBodyLocation());
         assertEquals(new Double(40.52), manager.getWearableAtIndex(9).getPrice());
+        System.out.println("manager = " + manager.getWearableAtIndex(0).getName());
+        System.out.println("manager = " + manager.getWearableAtIndex(1).getName());
+        System.out.println("manager = " + manager.getWearableAtIndex(2).getName());
+        System.out.println("manager = " + manager.getWearableAtIndex(3).getName());
+        System.out.println("manager = " + manager.getWearableAtIndex(4).getName());
+        System.out.println("manager = " + manager.getWearableAtIndex(5).getName());
+        System.out.println("manager = " + manager.getWearableAtIndex(6).getName());
+        System.out.println("manager = " + manager.getWearableAtIndex(7).getName());
+        System.out.println("manager = " + manager.getWearableAtIndex(8).getName());
+        System.out.println("manager = " + manager.getWearableAtIndex(9).getName());//todo remove
     }
 
     @Test
@@ -67,5 +78,11 @@ public class WearableManagerTest {
         for (int index = 0; index < coNamePositionData.length; index++) {
             assertEquals(positionList[index], coNamePositionData[index]);
         }
+    }
+
+    @Test
+    public void testCsvWithPricingData() throws FileNotFoundException {
+        Boolean success = manager.generateCsv(manager.getPricingPositionData(), "CsvFile.csv");
+        assertTrue(success);
     }
 }
