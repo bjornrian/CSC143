@@ -12,20 +12,12 @@ public class IndexTest {
     @Test
     public void testPutNodeAndGetPosition() {
         Index<Integer> integerIndex = new Index<>();
-        Wearable testWearable = new Wearable(
-                548,
-                "Barska GB12166 Fitness Watch with Heart Rate Monitor",
-                49.99,
-                "Wrist",
-                "Fitness",
-                "Barska",
-                "http://www.barska.com/",
-                "Pomona, California, United States",
-                "Pomona",
-                "California",
-                "United States");
-        integerIndex.put(testWearable.getRanking(), 21);
-        assertEquals(21, integerIndex.get(testWearable.getRanking()));
+        Wearable[] testWearableList = buildWearableList();
+        for (int index = 0; index < testWearableList.length; index++) {
+            integerIndex.put(testWearableList[index].getRanking(), index);
+        }
+        assertEquals(1, integerIndex.get(20));
+        assertEquals(3, integerIndex.get(2));
     }
 
     @Test
