@@ -7,6 +7,17 @@ import java.util.Scanner;
 
 public class WearableManager {
     private static final String PATH_WEARABLES = "src/wearableDevices/resources/Wearables.txt";
+    public static final int RANKING = 0;
+    public static final int NAME = 1;
+    public static final int PRICE = 2;
+    public static final int BODY_LOCATION = 3;
+    public static final int CATEGORY = 4;
+    public static final int COMPANY_NAME = 5;
+    public static final int COMPANY_URL = 6;
+    public static final int COMPANY_MAPPING_LOCATION = 7;
+    public static final int COMPANY_CITY = 8;
+    public static final int COMPANY_US_STATE = 9;
+    public static final int COMPANY_COUNTRY = 10;
     private Wearable[] wearableList;
     private int wearableListLength; //first scan.nextInt value in Wearable.txt
     private Index<Integer> rankingPositionData = new Index<>();
@@ -63,7 +74,7 @@ public class WearableManager {
     private String addQuotationMarks(String value, boolean addComma) {
         value = value.replace("\"", "\"\"");
         value = "\"" + value.replace(",", "','");
-        if(addComma) {
+        if (addComma) {
             value = value + "\",";
         } else value = value + "\"";
         return value;
@@ -78,20 +89,30 @@ public class WearableManager {
             fileIn.nextLine();
             for (int lineNum = 0; lineNum < wearableListLength; lineNum++) {
                 String line = fileIn.nextLine();
-                String[] characteristics = line.split("@");
-                Wearable oneWearable = new Wearable(Integer.parseInt(characteristics[0]),
-                        characteristics[1], Double.parseDouble(characteristics[2]),
-                        characteristics[3], characteristics[4], characteristics[5],
-                        characteristics[6], characteristics[7], characteristics[8],
-                        characteristics[9], characteristics[10]);
-                rankingPositionData.put(Integer.parseInt(characteristics[0]), lineNum);
-                pricePositionData.put(Double.parseDouble(characteristics[2]), lineNum);
-                coNamePositionData.put(characteristics[5], lineNum);
+                String[] lineData = line.split("@");
+                Wearable oneWearable = new Wearable(Integer.parseInt(lineData[RANKING]),
+                        lineData[NAME],
+                        Double.parseDouble(lineData[PRICE]),
+                        lineData[BODY_LOCATION],
+                        lineData[CATEGORY],
+                        lineData[COMPANY_NAME],
+                        lineData[COMPANY_URL],
+                        lineData[COMPANY_MAPPING_LOCATION],
+                        lineData[COMPANY_CITY],
+                        lineData[COMPANY_US_STATE],
+                        lineData[COMPANY_COUNTRY]);
+                addPositionData(lineNum, lineData);
                 wearableList[lineNum] = oneWearable;
             }
         } catch (FileNotFoundException e) {
             System.out.println("Error: " + e.getMessage());
             wearableList = new Wearable[0];
         }
+    }
+
+    private void addPositionData(int index, String[] lineData) {
+        rankingPositionData.put(Integer.parseInt(lineData[RANKING]), index);
+        pricePositionData.put(Double.parseDouble(lineData[PRICE]), index);
+        coNamePositionData.put(lineData[COMPANY_NAME], index);
     }
 }
