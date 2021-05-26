@@ -38,16 +38,6 @@ public class WearableManagerTest {
         assertEquals(349, manager.getWearableAtIndex(7).getRanking());
         assertEquals("Torso", manager.getWearableAtIndex(8).getBodyLocation());
         assertEquals(new Double(40.52), manager.getWearableAtIndex(9).getPrice());
-        System.out.println("manager = " + manager.getWearableAtIndex(0).getName());
-        System.out.println("manager = " + manager.getWearableAtIndex(1).getName());
-        System.out.println("manager = " + manager.getWearableAtIndex(2).getName());
-        System.out.println("manager = " + manager.getWearableAtIndex(3).getName());
-        System.out.println("manager = " + manager.getWearableAtIndex(4).getName());
-        System.out.println("manager = " + manager.getWearableAtIndex(5).getName());
-        System.out.println("manager = " + manager.getWearableAtIndex(6).getName());
-        System.out.println("manager = " + manager.getWearableAtIndex(7).getName());
-        System.out.println("manager = " + manager.getWearableAtIndex(8).getName());
-        System.out.println("manager = " + manager.getWearableAtIndex(9).getName());//todo remove
     }
 
     @Test

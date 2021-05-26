@@ -19,7 +19,6 @@ public class WearableManager {
 
     public WearableManager(String path) {
         readWearableFile(path);
-        addPositionData();
     }
 
     public Wearable getWearableAtIndex(int index) {
@@ -38,17 +37,6 @@ public class WearableManager {
         return coNamePositionData.getPositionData();
     }
 
-    /**
-     * Strings containing dangerous characters
-     * (especially commas and quotation marks)
-     * should themselves be surrounded by quotation marks,
-     * with interior quotation marks doubled.
-     *
-     * @param positions
-     * @param filename
-     * @return
-     * @throws FileNotFoundException
-     */
     public Boolean generateCsv(int[] positions, String filename) throws FileNotFoundException {
         File file = new File(filename);
         PrintStream fileOut = new PrintStream(file);
@@ -96,18 +84,14 @@ public class WearableManager {
                         characteristics[3], characteristics[4], characteristics[5],
                         characteristics[6], characteristics[7], characteristics[8],
                         characteristics[9], characteristics[10]);
+                rankingPositionData.put(Integer.parseInt(characteristics[0]), lineNum);
+                pricePositionData.put(Double.parseDouble(characteristics[2]), lineNum);
+                coNamePositionData.put(characteristics[5], lineNum);
                 wearableList[lineNum] = oneWearable;
             }
         } catch (FileNotFoundException e) {
+            System.out.println("Error: " + e.getMessage());
             wearableList = new Wearable[0];
-        }
-    }
-
-    private void addPositionData() {//todo should be done while reading the file and building master list
-        for (int index = 0; index < wearableListLength; index++) {
-            rankingPositionData.put(wearableList[index].getRanking(), index);
-            pricePositionData.put(wearableList[index].getPrice(), index);
-            coNamePositionData.put(wearableList[index].getCompanyName(), index);
         }
     }
 }
