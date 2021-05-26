@@ -11,7 +11,7 @@ import java.util.Iterator;
  * @param <E> specified type of SortedArrayList
  */
 public class SortedArrayList<E extends Comparable<E>> {
-    private previousProjects.stanleyStorage.movieProject.ArrayList<E> list;
+    private ArrayList<E> list;
     private int numberOfElements = 0;
 
     /**

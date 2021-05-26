@@ -1,10 +1,10 @@
 package previousProjects.movieProject.test;
 
-import previousProjects.stanleyStorage.movieProject.ArrayList;
-import previousProjects.stanleyStorage.movieProject.Movie;
-import previousProjects.stanleyStorage.movieProject.MovieManager;
 import org.junit.Before;
 import org.junit.Test;
+import previousProjects.movieProject.ArrayList;
+import previousProjects.movieProject.Movie;
+import previousProjects.movieProject.MovieManager;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;

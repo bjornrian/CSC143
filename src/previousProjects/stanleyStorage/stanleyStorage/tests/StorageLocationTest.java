@@ -1,4 +1,4 @@
-package previousProjects.tests;
+package previousProjects.stanleyStorage.stanleyStorage.tests;
 
 import org.junit.Test;
 import previousProjects.stanleyStorage.stanleyStorage.*;

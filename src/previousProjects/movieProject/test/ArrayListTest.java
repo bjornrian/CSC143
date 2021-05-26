@@ -1,8 +1,8 @@
 package previousProjects.movieProject.test;
 
-import previousProjects.stanleyStorage.movieProject.ArrayList;
-import previousProjects.stanleyStorage.movieProject.Movie;
 import org.junit.Test;
+import previousProjects.movieProject.ArrayList;
+import previousProjects.movieProject.Movie;
 
 import static org.junit.Assert.assertEquals;
 
@@ -24,7 +24,7 @@ public class ArrayListTest {
     @Test
     public void testToArray() {
         //testing a java util arraylist
-        previousProjects.stanleyStorage.movieProject.ArrayList list = new previousProjects.stanleyStorage.movieProject.ArrayList<String>();
+        ArrayList<String> list = new ArrayList<String>();
         list.add("four");
         list.add("five");
         list.add("six");

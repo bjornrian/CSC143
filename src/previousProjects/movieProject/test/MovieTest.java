@@ -1,8 +1,8 @@
 package previousProjects.movieProject.test;
 
-import previousProjects.stanleyStorage.movieProject.Movie;
-import previousProjects.stanleyStorage.movieProject.SortedArrayList;
 import org.junit.Test;
+import previousProjects.movieProject.Movie;
+import previousProjects.movieProject.SortedArrayList;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

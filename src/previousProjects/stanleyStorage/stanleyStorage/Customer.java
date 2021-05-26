@@ -1,4 +1,4 @@
-package previousProjects.stanleyStorage;
+package previousProjects.stanleyStorage.stanleyStorage;
 
 /**
  * Represents a customer that rents a storage unit.

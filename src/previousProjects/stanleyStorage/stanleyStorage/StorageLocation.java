@@ -1,4 +1,4 @@
-package previousProjects.stanleyStorage;
+package previousProjects.stanleyStorage.stanleyStorage;
 
 /**
  * Represents a storage location with many storage units.

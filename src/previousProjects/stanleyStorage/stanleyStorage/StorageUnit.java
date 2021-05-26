@@ -1,4 +1,4 @@
-package previousProjects.stanleyStorage;
+package previousProjects.stanleyStorage.stanleyStorage;
 
 import java.time.LocalDate;
 
