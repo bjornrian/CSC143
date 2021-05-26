@@ -7,19 +7,18 @@ import java.util.Scanner;
 
 public class WearableManager {
     private static final String PATH_WEARABLES = "src/wearableDevices/resources/Wearables.txt";
-    public static final int RANKING = 0;
-    public static final int NAME = 1;
-    public static final int PRICE = 2;
-    public static final int BODY_LOCATION = 3;
-    public static final int CATEGORY = 4;
-    public static final int COMPANY_NAME = 5;
-    public static final int COMPANY_URL = 6;
-    public static final int COMPANY_MAPPING_LOCATION = 7;
-    public static final int COMPANY_CITY = 8;
-    public static final int COMPANY_US_STATE = 9;
-    public static final int COMPANY_COUNTRY = 10;
+    private static final int RANKING = 0;
+    private static final int NAME = 1;
+    private static final int PRICE = 2;
+    private static final int BODY_LOCATION = 3;
+    private static final int CATEGORY = 4;
+    private static final int COMPANY_NAME = 5;
+    private static final int COMPANY_URL = 6;
+    private static final int COMPANY_MAPPING_LOCATION = 7;
+    private static final int COMPANY_CITY = 8;
+    private static final int COMPANY_US_STATE = 9;
+    private static final int COMPANY_COUNTRY = 10;
     private Wearable[] wearableList;
-    private int wearableListLength; //first scan.nextInt value in Wearable.txt
     private Index<Integer> rankingPositionData = new Index<>();
     private Index<Double> pricePositionData = new Index<>();
     private Index<String> coNamePositionData = new Index<>();
@@ -48,7 +47,7 @@ public class WearableManager {
         return coNamePositionData.getPositionData();
     }
 
-    public Boolean generateCsv(int[] positions, String filename) throws FileNotFoundException {
+    public boolean generateCsv(int[] positions, String filename) throws FileNotFoundException {
         File file = new File(filename);
         PrintStream fileOut = new PrintStream(file);
         fileOut.println("Ranking, Name, Price, Body Location, Category, Company Name, " +
@@ -76,14 +75,16 @@ public class WearableManager {
         value = "\"" + value.replace(",", "','");
         if (addComma) {
             value = value + "\",";
-        } else value = value + "\"";
+        } else {
+            value = value + "\"";
+        }
         return value;
     }
 
     private void readWearableFile(String path) {
         try {
             Scanner fileIn = new Scanner(new File(path));
-            wearableListLength = fileIn.nextInt();
+            int wearableListLength = fileIn.nextInt();
             wearableList = new Wearable[wearableListLength];
             fileIn.nextLine();
             fileIn.nextLine();

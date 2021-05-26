@@ -72,7 +72,7 @@ public class WearableManagerTest {
 
     @Test
     public void testCsvWithPricingData() throws FileNotFoundException {
-        Boolean success = manager.generateCsv(manager.getPricingPositionData(), "CsvFile.csv");
+        boolean success = manager.generateCsv(manager.getPricingPositionData(), "CsvFile.csv");
         assertTrue(success);
     }
 }
