@@ -14,39 +14,87 @@ public class UserInterface extends JFrame {
     private Boolean hasBlackBackground;
 
     public UserInterface() {
-        setSize(960, 1080);
-        setTitle("Tethered Radial Fractal");
-        setResizable(false);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        //JFrame
+        JFrame frame = new JFrame();
+        frame.setSize(960, 1080);
+        frame.setTitle("Tethered Radial Fractal");
+        frame.setResizable(false);
+        frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
         toolkit = getToolkit();
 
-        //JPanel Stuff
-        JPanel panel = new GPanel();
+        //Graphics Panel
+        JPanel panel = new JPanel();
         getContentPane().add(panel);
         panel.setLayout(null);
+        frame.add(panel);
 
-        //JButton Stuff
-        JButton beep = new JButton("Beep");
-        beep.setBounds(150, 60, 80, 30);
-        JButton close = new JButton("Close");
-        close.setBounds(50, 60, 80, 30);
+        JPanel drawPanel = new GPanel();
+        getContentPane().add(drawPanel);
+        drawPanel.setLayout(null);
+        drawPanel.setVisible(false);
+        frame.add(drawPanel);
 
-        beep.addActionListener(new ActionListener() {
+        //JButtons
+        JButton childCount = new JButton("Child Count");
+        childCount.setBounds(125, 25, 80, 30);
+        childCount.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                toolkit.beep();
+                //todo
             }
         });
+        panel.add(childCount);
 
-        close.addActionListener(new ActionListener() {
+        JButton childToParentRatio = new JButton("Ratio");
+        childToParentRatio.setBounds(25, 25, 80, 30);
+        childToParentRatio.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.exit(0);
+                //todo
             }
         });
+        panel.add(childToParentRatio);
 
-        panel.add(beep);
-        panel.add(close);
+        JButton recursionDepth = new JButton("Recursion Depth");
+        recursionDepth.setBounds(225, 25, 80, 30);
+        recursionDepth.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //todo
+            }
+        });
+        panel.add(recursionDepth);
+
+        JButton color = new JButton("Color");
+        color.setBounds(325, 25, 80, 30);
+        color.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //todo
+            }
+        });
+        panel.add(color);
+
+        JComboBox<String> background = new JComboBox<>(new String[]{"Black", "White"});
+        background.setBounds(425, 25, 80, 30);
+        background.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JComboBox cb = (JComboBox)e.getSource();
+                hasBlackBackground = ((String) cb.getSelectedItem()).equals("Black");
+            }
+        });
+        panel.add(background);
+
+        JButton draw = new JButton("Draw");
+        draw.setBounds(525, 25, 80, 30);
+        draw.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                drawPanel.setVisible(true);
+            }
+        });
+        panel.add(draw);
     }
 
     private class GPanel extends JPanel {
