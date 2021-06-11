@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class UserInterface extends JFrame {
+public class GatherUserData extends JFrame {
     private Toolkit toolkit;
     private int childCount;
     private int childParentRatio;
@@ -13,30 +13,37 @@ public class UserInterface extends JFrame {
     private Color color; //todo color variable might change
     private Boolean hasBlackBackground;
 
-    public UserInterface() {
+    public GatherUserData() {
         //JFrame
-        JFrame frame = new JFrame();
-        frame.setSize(960, 1080);
-        frame.setTitle("Tethered Radial Fractal");
-        frame.setResizable(false);
-        frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setSize(960, 1080);
+        setTitle("Tethered Radial Fractal");
+        setResizable(false);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         toolkit = getToolkit();
 
         //Graphics Panel
         JPanel panel = new JPanel();
         getContentPane().add(panel);
         panel.setLayout(null);
-        frame.add(panel);
+        add(panel);
 
-        JPanel drawPanel = new GPanel();
-        getContentPane().add(drawPanel);
-        drawPanel.setLayout(null);
-        drawPanel.setVisible(false);
-        frame.add(drawPanel);
+//        JPanel drawPanel = new GPanel();
+//        getContentPane().add(drawPanel);
+//        drawPanel.setLayout(null);
+//        drawPanel.setVisible(false);
+//        add(drawPanel);
 
         //JButtons
-        JButton childCount = new JButton("Child Count");
-        childCount.setBounds(125, 25, 80, 30);
+        JSlider childToParentRatio = new JSlider(20, 70, 45);
+        childToParentRatio.setBounds(25, 25, 80, 30);
+        childToParentRatio.setPaintTrack(true);
+        childToParentRatio.setPaintTicks(true);
+        childToParentRatio.setPaintLabels(true);
+        childToParentRatio.setMinorTickSpacing(5);
+        panel.add(childToParentRatio);
+
+        JComboBox<Integer> childCount = new JComboBox<>(new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13});
+        childCount.setBounds(130, 25, 120, 30);
         childCount.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -45,18 +52,8 @@ public class UserInterface extends JFrame {
         });
         panel.add(childCount);
 
-        JButton childToParentRatio = new JButton("Ratio");
-        childToParentRatio.setBounds(25, 25, 80, 30);
-        childToParentRatio.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //todo
-            }
-        });
-        panel.add(childToParentRatio);
-
-        JButton recursionDepth = new JButton("Recursion Depth");
-        recursionDepth.setBounds(225, 25, 80, 30);
+        JComboBox<Integer> recursionDepth = new JComboBox<>(new Integer[]{2, 3, 4, 5, 6, 7, 8, 9, 10});
+        recursionDepth.setBounds(275, 25, 120, 30);
         recursionDepth.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -66,7 +63,7 @@ public class UserInterface extends JFrame {
         panel.add(recursionDepth);
 
         JButton color = new JButton("Color");
-        color.setBounds(325, 25, 80, 30);
+        color.setBounds(420, 25, 80, 30);
         color.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -76,7 +73,7 @@ public class UserInterface extends JFrame {
         panel.add(color);
 
         JComboBox<String> background = new JComboBox<>(new String[]{"Black", "White"});
-        background.setBounds(425, 25, 80, 30);
+        background.setBounds(525, 25, 80, 30);
         background.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -87,11 +84,11 @@ public class UserInterface extends JFrame {
         panel.add(background);
 
         JButton draw = new JButton("Draw");
-        draw.setBounds(525, 25, 80, 30);
+        draw.setBounds(630, 25, 80, 30);
         draw.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                drawPanel.setVisible(true);
+                //drawPanel.setVisible(true);
             }
         });
         panel.add(draw);
