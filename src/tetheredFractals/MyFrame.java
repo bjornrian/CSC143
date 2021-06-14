@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class GatherUserData extends JFrame {
+public class MyFrame extends JFrame {
     private Toolkit toolkit;
     private int childCount;
     private int childParentRatio;
@@ -13,25 +13,13 @@ public class GatherUserData extends JFrame {
     private Color color; //todo color variable might change
     private Boolean hasBlackBackground;
 
-    public GatherUserData() {
+    public MyFrame() {
         //JFrame
-        setSize(960, 1080);
-        setTitle("Tethered Radial Fractal");
-        setResizable(false);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setSize(960, 1080);
+        this.setTitle("Tethered Radial Fractal");
+        this.setResizable(false);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         toolkit = getToolkit();
-
-        //Graphics Panel
-        JPanel panel = new JPanel();
-        getContentPane().add(panel);
-        panel.setLayout(null);
-        add(panel);
-
-//        JPanel drawPanel = new GPanel();
-//        getContentPane().add(drawPanel);
-//        drawPanel.setLayout(null);
-//        drawPanel.setVisible(false);
-//        add(drawPanel);
 
         //JButtons
         JSlider childToParentRatio = new JSlider(20, 70, 45);
@@ -40,7 +28,7 @@ public class GatherUserData extends JFrame {
         childToParentRatio.setPaintTicks(true);
         childToParentRatio.setPaintLabels(true);
         childToParentRatio.setMinorTickSpacing(5);
-        panel.add(childToParentRatio);
+        this.add(childToParentRatio);
 
         JComboBox<Integer> childCount = new JComboBox<>(new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13});
         childCount.setBounds(130, 25, 120, 30);
@@ -50,7 +38,7 @@ public class GatherUserData extends JFrame {
                 //todo
             }
         });
-        panel.add(childCount);
+        this.add(childCount);
 
         JComboBox<Integer> recursionDepth = new JComboBox<>(new Integer[]{2, 3, 4, 5, 6, 7, 8, 9, 10});
         recursionDepth.setBounds(275, 25, 120, 30);
@@ -60,7 +48,7 @@ public class GatherUserData extends JFrame {
                 //todo
             }
         });
-        panel.add(recursionDepth);
+        this.add(recursionDepth);
 
         JButton color = new JButton("Color");
         color.setBounds(420, 25, 80, 30);
@@ -70,7 +58,7 @@ public class GatherUserData extends JFrame {
                 //todo
             }
         });
-        panel.add(color);
+        this.add(color);
 
         JComboBox<String> background = new JComboBox<>(new String[]{"Black", "White"});
         background.setBounds(525, 25, 80, 30);
@@ -81,7 +69,7 @@ public class GatherUserData extends JFrame {
                 hasBlackBackground = ((String) cb.getSelectedItem()).equals("Black");
             }
         });
-        panel.add(background);
+        this.add(background);
 
         JButton draw = new JButton("Draw");
         draw.setBounds(630, 25, 80, 30);
@@ -91,7 +79,7 @@ public class GatherUserData extends JFrame {
                 //drawPanel.setVisible(true);
             }
         });
-        panel.add(draw);
+        this.add(draw);
     }
 
     private class GPanel extends JPanel {
