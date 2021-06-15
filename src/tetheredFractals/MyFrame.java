@@ -5,90 +5,164 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MyFrame extends JFrame {
+public class MyFrame extends JFrame implements ActionListener {
     private Toolkit toolkit;
-    private int childCount;
-    private int childParentRatio;
-    private int recursionDepth;
-    private Color color; //todo color variable might change
-    private Boolean hasBlackBackground;
+    private Integer numberOfChildren = 3;
+    private Integer childParentRatio = 40;
+    private Integer recursionDepth = 5;
+    private Color color = Color.BLACK;
+    private Color backgroundColor = Color.WHITE;
+
 
     public MyFrame() {
         //JFrame
-        this.setSize(960, 1080);
+        this.setSize(960, 540);
         this.setTitle("Tethered Radial Fractal");
         this.setResizable(false);
+        this.setLayout(null);
+        this.setVisible(true);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         toolkit = getToolkit();
 
+        //JPanel
+        JPanel widgetPanel = new JPanel();
+        widgetPanel.setBounds(0, 0, 960, 540);
+        widgetPanel.setBackground(Color.gray);
+        widgetPanel.setLayout(null);
+        this.add(widgetPanel);
+
         //JButtons
-        JSlider childToParentRatio = new JSlider(20, 70, 45);
-        childToParentRatio.setBounds(25, 25, 80, 30);
-        childToParentRatio.setPaintTrack(true);
-        childToParentRatio.setPaintTicks(true);
-        childToParentRatio.setPaintLabels(true);
-        childToParentRatio.setMinorTickSpacing(5);
-        this.add(childToParentRatio);
-
-        JComboBox<Integer> childCount = new JComboBox<>(new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13});
-        childCount.setBounds(130, 25, 120, 30);
-        childCount.addActionListener(new ActionListener() {
+        JComboBox<Integer> numberOfChildrenSelector = new JComboBox<>(new Integer[]
+                {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13});
+        numberOfChildrenSelector.setBounds(60, 120, 300, 60 );
+        numberOfChildrenSelector.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //todo
+                JComboBox source = (JComboBox) e.getSource();
+                numberOfChildren = (Integer) source.getSelectedItem();
+                System.out.println("numberOfChildren = " + numberOfChildren);
             }
         });
-        this.add(childCount);
+        widgetPanel.add(numberOfChildrenSelector);
 
-        JComboBox<Integer> recursionDepth = new JComboBox<>(new Integer[]{2, 3, 4, 5, 6, 7, 8, 9, 10});
-        recursionDepth.setBounds(275, 25, 120, 30);
-        recursionDepth.addActionListener(new ActionListener() {
+        JComboBox<Integer> childToParentRatioSelector = new JComboBox<>(new Integer[]
+                {20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37,
+                        38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53,
+                        54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70});
+        childToParentRatioSelector.setBounds(60, 267, 300, 60 );
+        childToParentRatioSelector.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //todo
+                JComboBox source = (JComboBox) e.getSource();
+                childParentRatio = (Integer) source.getSelectedItem();
+                System.out.println("numberOfChildren = " + childParentRatio);
             }
         });
-        this.add(recursionDepth);
+        widgetPanel.add(childToParentRatioSelector);
 
-        JButton color = new JButton("Color");
-        color.setBounds(420, 25, 80, 30);
-        color.addActionListener(new ActionListener() {
+        JComboBox<Integer> recursionDepthSelector = new JComboBox<>(new Integer[]
+                {2, 3, 4, 5, 6, 7, 8, 9, 10});
+        recursionDepthSelector.setBounds(60, 416, 300, 60 );
+        recursionDepthSelector.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //todo
+                JComboBox source = (JComboBox) e.getSource();
+                recursionDepth = (Integer) source.getSelectedItem();
+                System.out.println("recursionDepth = " + recursionDepth);
             }
         });
-        this.add(color);
+        widgetPanel.add(recursionDepthSelector);
 
-        JComboBox<String> background = new JComboBox<>(new String[]{"Black", "White"});
-        background.setBounds(525, 25, 80, 30);
-        background.addActionListener(new ActionListener() {
+        JButton colorSelector = new JButton("Color");
+        colorSelector.setBounds(600, 120, 300, 60);
+        colorSelector.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JComboBox cb = (JComboBox)e.getSource();
-                hasBlackBackground = ((String) cb.getSelectedItem()).equals("Black");
+                JFrame colorFrame = new JFrame();
+                colorFrame.setSize(960, 540);
+                colorFrame.setTitle("Color Chooser");
+                colorFrame.setResizable(false);
+                colorFrame.setLayout(null);
+                colorFrame.setVisible(true);
+                colorFrame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
+                JPanel colorChooser = new ColorChooserDemo();
+                colorFrame.add(colorChooser);
             }
         });
-        this.add(background);
+        widgetPanel.add(colorSelector);
 
-        JButton draw = new JButton("Draw");
-        draw.setBounds(630, 25, 80, 30);
-        draw.addActionListener(new ActionListener() {
+        //Color sample for fractal
+        JLabel colorSample = new JLabel();
+        colorSample.setBounds(520, 120, 60, 60);
+        colorSample.setBackground(color);
+        colorSample.setVisible(true);
+        widgetPanel.add(colorSample);
+
+        JComboBox<String> backgroundSelector = new JComboBox<>(new String[]{"White", "Black"});
+        backgroundSelector.setBounds(600, 267, 300, 60);
+        backgroundSelector.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //drawPanel.setVisible(true);
+                JComboBox source = (JComboBox) e.getSource();
+                if(source.getSelectedItem().equals("White")) {
+                    backgroundColor = Color.WHITE;
+                }
+                else {
+                    backgroundColor = Color.BLACK;
+                }
+
+                System.out.println("backgroundColor = " + backgroundColor);
+
             }
         });
-        this.add(draw);
+        widgetPanel.add(backgroundSelector);
+
+        JButton drawSelector = new JButton("Draw");
+        drawSelector.setBounds(600, 416, 300, 60);
+        drawSelector.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame drawingFrame = new JFrame();
+                drawingFrame.setLocation(960, 0);
+                drawingFrame.setSize(960, 1080);
+                drawingFrame.setTitle("Fractal Generator");
+                drawingFrame.setResizable(false);
+                drawingFrame.setLayout(null);
+                drawingFrame.setVisible(true);
+                drawingFrame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
+                JPanel drawingPanel = new GPanel();
+                drawingPanel.setBounds(0, 0, 960, 1080);
+                drawingPanel.setBackground(backgroundColor);
+                drawingPanel.setVisible(false);
+                drawingPanel.setLayout(null);
+                drawingFrame.add(drawingPanel);
+                drawingPanel.setVisible(true);
+                System.out.println();
+
+
+                System.out.println("Child Count: " + numberOfChildren);
+                System.out.println("Ratio: " + childParentRatio + "%");
+                System.out.println("Recursion Depth: " + recursionDepth);
+                System.out.println("Color: " + color);
+                System.out.println("Background Color: " + backgroundColor);
+            }
+        });
+        widgetPanel.add(drawSelector);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
     }
 
     private class GPanel extends JPanel {
         @Override
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
-            g.drawRect(10, 10, 190, 190);
+            g.drawRect(96, 96, 390, 390);
             g.setColor(Color.BLACK);
-            g.fillOval(50, 50, 100, 100);
         }
     }
 }
