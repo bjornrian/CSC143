@@ -6,6 +6,8 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 public class MyFrame extends JFrame implements ActionListener {
     private Toolkit toolkit;
@@ -50,6 +52,7 @@ public class MyFrame extends JFrame implements ActionListener {
         });
         widgetPanel.add(numberOfChildrenSelector);
 
+        //Child to parent ratio
         JComboBox<Integer> childToParentRatioSelector = new JComboBox<>(new Integer[]
                 {20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37,
                         38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53,
@@ -66,6 +69,7 @@ public class MyFrame extends JFrame implements ActionListener {
         });
         widgetPanel.add(childToParentRatioSelector);
 
+        //recursion depth
         JComboBox<Integer> recursionDepthSelector = new JComboBox<>(new Integer[]
                 {2, 3, 4, 5, 6, 7, 8, 9, 10});
         recursionDepthSelector.setBounds(60, 416, 300, 60);
@@ -80,46 +84,33 @@ public class MyFrame extends JFrame implements ActionListener {
         });
         widgetPanel.add(recursionDepthSelector);
 
-        JButton colorSelector = new JButton("Color");
+        //Color sample for fractal
+        JLabel colorSample = new JLabel();
+        colorSample.setBounds(520, 120, 60, 60);
+        colorSample.setOpaque(true);
+        colorSample.setBackground(color);
+        widgetPanel.add(colorSample);
+        colorSample.setVisible(true);
+        //colorSample.addComponentListener();
+        colorSample.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                evt.getSource();
+            }
+        });
+
+        JButton colorSelector = new JButton("Fractal Color");
         colorSelector.setBounds(600, 120, 300, 60);
         colorSelector.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFrame colorChooserFrame = new JFrame();
-                colorChooserFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
-                //Create and set up the content pane.
-                JComponent newContentPane = new ColorChooser();
-                newContentPane.setOpaque(true); //content panes must be opaque
-                colorChooserFrame.setContentPane(newContentPane);
-                colorChooserFrame.setLocation(0, 540);
-                colorChooserFrame.setSize(960, 540);
-
-                //Display the window.
-                colorChooserFrame.pack();
-                colorChooserFrame.setVisible(true);
-
-//                JFrame colorFrame = new JFrame();
-//                colorFrame.setLocation(0, 540);
-//                colorFrame.setSize(960, 540);
-//                colorFrame.setTitle("Color Chooser");
-//                colorFrame.setResizable(false);
-//                colorFrame.setLayout(null);
-//                colorFrame.setVisible(true);
-//                colorFrame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-//
-//                JPanel colorChooser = new ColorChooser();
-//                colorFrame.add(colorChooser);
+                Color initialColor = Color.RED;
+                Color selectedColor = JColorChooser.showDialog(colorSelector, "Select a color", initialColor);
+                colorSample.setBackground(selectedColor);
+                color = selectedColor;
             }
         });
         widgetPanel.add(colorSelector);
-
-        //Color sample for fractal
-        JLabel colorSample = new JLabel();
-        colorSample.setBounds(520, 120, 60, 60);
-        colorSample.setBackground(color);
-        colorSample.setVisible(true);
-        widgetPanel.add(colorSample);
 
         JComboBox<String> backgroundSelector = new JComboBox<>(new String[]{"White", "Black"});
         backgroundSelector.setBounds(600, 267, 300, 60);
@@ -177,7 +168,6 @@ public class MyFrame extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
     }
 
     private class GPanel extends JPanel {
@@ -216,39 +206,6 @@ public class MyFrame extends JFrame implements ActionListener {
                             (int) (radius * Math.sin(piValue) + startY));
                 }
             }
-        }
-    }
-
-    private class ColorChooser extends JPanel implements ChangeListener {
-        public JColorChooser tcc;
-        public JLabel banner;
-
-        public ColorChooser() {
-            super(new BorderLayout());
-
-            //Banner at top of window
-            banner = new JLabel("Sample Color", JLabel.CENTER);
-            banner.setForeground(color);
-            banner.setBackground(backgroundColor);
-            banner.setOpaque(true);
-            banner.setFont(new Font("SansSerif", Font.BOLD, 24));
-            banner.setPreferredSize(new Dimension(100, 65));
-
-            JPanel bannerPanel = new JPanel(new BorderLayout());
-            bannerPanel.add(banner, BorderLayout.CENTER);
-            bannerPanel.setBorder(BorderFactory.createBevelBorder(2));
-
-            tcc = new JColorChooser(banner.getForeground());
-            tcc.getSelectionModel().addChangeListener(this);
-            tcc.setBorder(BorderFactory.createTitledBorder("Choose Color"));
-
-            add(bannerPanel, BorderLayout.CENTER);
-            add(tcc, BorderLayout.PAGE_END);
-        }
-
-        public void stateChanged(ChangeEvent e) {
-            color = tcc.getColor();
-            banner.setForeground(color);
         }
     }
 }
