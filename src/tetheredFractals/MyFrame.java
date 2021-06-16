@@ -1,6 +1,8 @@
 package tetheredFractals;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,7 +18,6 @@ public class MyFrame extends JFrame implements ActionListener {
     private Integer recursionDepth = 5;
     private Color color = Color.BLACK;
     private Color backgroundColor = Color.WHITE;
-
 
     public MyFrame() {
         //JFrame
@@ -84,17 +85,31 @@ public class MyFrame extends JFrame implements ActionListener {
         colorSelector.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFrame colorFrame = new JFrame();
-                colorFrame.setLocation(0, 540);
-                colorFrame.setSize(960, 540);
-                colorFrame.setTitle("Color Chooser");
-                colorFrame.setResizable(false);
-                colorFrame.setLayout(null);
-                colorFrame.setVisible(true);
-                colorFrame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+                JFrame colorChooserFrame = new JFrame();
+                colorChooserFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-                JPanel colorChooser = new ColorChooserDemo();
-                colorFrame.add(colorChooser);
+                //Create and set up the content pane.
+                JComponent newContentPane = new ColorChooser();
+                newContentPane.setOpaque(true); //content panes must be opaque
+                colorChooserFrame.setContentPane(newContentPane);
+                colorChooserFrame.setLocation(0, 540);
+                colorChooserFrame.setSize(960, 540);
+
+                //Display the window.
+                colorChooserFrame.pack();
+                colorChooserFrame.setVisible(true);
+
+//                JFrame colorFrame = new JFrame();
+//                colorFrame.setLocation(0, 540);
+//                colorFrame.setSize(960, 540);
+//                colorFrame.setTitle("Color Chooser");
+//                colorFrame.setResizable(false);
+//                colorFrame.setLayout(null);
+//                colorFrame.setVisible(true);
+//                colorFrame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+//
+//                JPanel colorChooser = new ColorChooser();
+//                colorFrame.add(colorChooser);
             }
         });
         widgetPanel.add(colorSelector);
@@ -203,6 +218,38 @@ public class MyFrame extends JFrame implements ActionListener {
             }
         }
     }
-}
 
+    private class ColorChooser extends JPanel implements ChangeListener {
+        public JColorChooser tcc;
+        public JLabel banner;
+
+        public ColorChooser() {
+            super(new BorderLayout());
+
+            //Banner at top of window
+            banner = new JLabel("Sample Color", JLabel.CENTER);
+            banner.setForeground(color);
+            banner.setBackground(backgroundColor);
+            banner.setOpaque(true);
+            banner.setFont(new Font("SansSerif", Font.BOLD, 24));
+            banner.setPreferredSize(new Dimension(100, 65));
+
+            JPanel bannerPanel = new JPanel(new BorderLayout());
+            bannerPanel.add(banner, BorderLayout.CENTER);
+            bannerPanel.setBorder(BorderFactory.createBevelBorder(2));
+
+            tcc = new JColorChooser(banner.getForeground());
+            tcc.getSelectionModel().addChangeListener(this);
+            tcc.setBorder(BorderFactory.createTitledBorder("Choose Color"));
+
+            add(bannerPanel, BorderLayout.CENTER);
+            add(tcc, BorderLayout.PAGE_END);
+        }
+
+        public void stateChanged(ChangeEvent e) {
+            color = tcc.getColor();
+            banner.setForeground(color);
+        }
+    }
+}
 
