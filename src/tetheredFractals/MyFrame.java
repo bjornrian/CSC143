@@ -171,28 +171,35 @@ public class MyFrame extends JFrame implements ActionListener {
             super.paintComponent(g);
             g.setColor(color);
             //patient zero
-            g.drawOval(START_X - 50, START_Y - 50, DIAMETER, DIAMETER);
-            paintShape(g, recursionDepth);
+            g.drawOval(START_X - 50, START_Y - 50, RADIUS * 2, RADIUS * 2);
+            paintShape(g, recursionDepth, START_X, START_Y, RADIUS);
         }
 
-        public void paintShape(Graphics g, Integer depth) {
-            if(depth > 1) {
+        public void paintShape(Graphics g, Integer depth, Integer startX, Integer startY, Integer radius) {
+            if (depth > 1) {
                 depth--;
-                for(int i = 1; i <= numberOfChildren; i++) {
-                    double piValue = (i*2*Math.PI)/(numberOfChildren);
+                for (int i = 1; i <= numberOfChildren; i++) {
+                    if (radius < 2) {
+                        break;
+                    }
+                    double piValue = (i * 2 * Math.PI) / (numberOfChildren);
                     //children
-                    g.drawOval((int) (DIAMETER * Math.cos(piValue) + START_X - (DIAMETER / 2 * childParentRatio / 100)),
-                            (int) (DIAMETER * Math.sin(piValue) + START_Y - (DIAMETER / 2 * childParentRatio / 100)),
-                            DIAMETER * childParentRatio / 100,
-                            DIAMETER * childParentRatio / 100);
+                    g.drawOval((int) (radius * 2 * Math.cos(piValue) + startX - (radius * childParentRatio / 100)),
+                            (int) (radius * 2 * Math.sin(piValue) + startY - (radius * childParentRatio / 100)),
+                            radius * 2 * childParentRatio / 100,
+                            radius * 2 * childParentRatio / 100);
+                    paintShape(g, depth,
+                            (int) ((radius * 2) * Math.cos(piValue) + startX),
+                            (int) ((radius * 2) * Math.sin(piValue) + startY),
+                            radius * childParentRatio / 100
+                    );
 
                     //parent to child lines
-                    g.drawLine((int) ((DIAMETER - (DIAMETER / 2 * childParentRatio / 100)) * Math.cos(piValue) + START_X),
-                            (int) ((DIAMETER - (DIAMETER / 2 * childParentRatio / 100)) * Math.sin(piValue) + START_Y),
-                            (int) (DIAMETER / 2 * Math.cos(piValue) + START_X),
-                            (int) (DIAMETER / 2 * Math.sin(piValue) + START_Y));
+                    g.drawLine((int) ((radius * 2 - (radius * childParentRatio / 100)) * Math.cos(piValue) + startX),
+                            (int) ((radius * 2 - (radius * childParentRatio / 100)) * Math.sin(piValue) + startY),
+                            (int) (radius * Math.cos(piValue) + startX),
+                            (int) (radius * Math.sin(piValue) + startY));
                 }
-                paintShape(g, depth);
             }
         }
     }
