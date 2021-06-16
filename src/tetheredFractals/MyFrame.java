@@ -1,13 +1,9 @@
 package tetheredFractals;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 public class MyFrame extends JFrame implements ActionListener {
     private Toolkit toolkit;
@@ -37,17 +33,17 @@ public class MyFrame extends JFrame implements ActionListener {
         widgetPanel.setLayout(null);
         this.add(widgetPanel);
 
-        //JButtons
+        //Number of children
         JComboBox<Integer> numberOfChildrenSelector = new JComboBox<>(new Integer[]
                 {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13});
         numberOfChildrenSelector.setBounds(60, 120, 300, 60);
         numberOfChildrenSelector.setSelectedIndex(2);
+        numberOfChildrenSelector.setToolTipText("Number of children");
         numberOfChildrenSelector.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JComboBox source = (JComboBox) e.getSource();
                 numberOfChildren = (Integer) source.getSelectedItem();
-                System.out.println("numberOfChildren = " + numberOfChildren);
             }
         });
         widgetPanel.add(numberOfChildrenSelector);
@@ -59,27 +55,27 @@ public class MyFrame extends JFrame implements ActionListener {
                         54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70});
         childToParentRatioSelector.setBounds(60, 267, 300, 60);
         childToParentRatioSelector.setSelectedIndex(20);
+        childToParentRatioSelector.setToolTipText("Child to parent ratio");
         childToParentRatioSelector.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JComboBox source = (JComboBox) e.getSource();
                 childParentRatio = (Integer) source.getSelectedItem();
-                System.out.println("numberOfChildren = " + childParentRatio);
             }
         });
         widgetPanel.add(childToParentRatioSelector);
 
-        //recursion depth
+        //Recursion depth
         JComboBox<Integer> recursionDepthSelector = new JComboBox<>(new Integer[]
                 {2, 3, 4, 5, 6, 7, 8, 9, 10});
         recursionDepthSelector.setBounds(60, 416, 300, 60);
         recursionDepthSelector.setSelectedIndex(3);
+        recursionDepthSelector.setToolTipText("Recursion depth");
         recursionDepthSelector.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JComboBox source = (JComboBox) e.getSource();
                 recursionDepth = (Integer) source.getSelectedItem();
-                System.out.println("recursionDepth = " + recursionDepth);
             }
         });
         widgetPanel.add(recursionDepthSelector);
@@ -91,13 +87,6 @@ public class MyFrame extends JFrame implements ActionListener {
         colorSample.setBackground(color);
         widgetPanel.add(colorSample);
         colorSample.setVisible(true);
-        //colorSample.addComponentListener();
-        colorSample.addPropertyChangeListener(new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                evt.getSource();
-            }
-        });
 
         JButton colorSelector = new JButton("Fractal Color");
         colorSelector.setBounds(600, 120, 300, 60);
@@ -112,8 +101,10 @@ public class MyFrame extends JFrame implements ActionListener {
         });
         widgetPanel.add(colorSelector);
 
+        //Background color
         JComboBox<String> backgroundSelector = new JComboBox<>(new String[]{"White", "Black"});
         backgroundSelector.setBounds(600, 267, 300, 60);
+        backgroundSelector.setToolTipText("Background color");
         backgroundSelector.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -123,9 +114,6 @@ public class MyFrame extends JFrame implements ActionListener {
                 } else {
                     backgroundColor = Color.BLACK;
                 }
-
-                System.out.println("backgroundColor = " + backgroundColor);
-
             }
         });
         widgetPanel.add(backgroundSelector);
@@ -151,13 +139,6 @@ public class MyFrame extends JFrame implements ActionListener {
                 drawingPanel.setLayout(null);
                 drawingFrame.add(drawingPanel);
                 drawingPanel.setVisible(true);
-
-                System.out.println();
-                System.out.println("Child Count: " + numberOfChildren);
-                System.out.println("Ratio: " + childParentRatio + "%");
-                System.out.println("Recursion Depth: " + recursionDepth);
-                System.out.println("Color: " + color);
-                System.out.println("Background Color: " + backgroundColor);
             }
         });
         widgetPanel.add(drawSelector);
