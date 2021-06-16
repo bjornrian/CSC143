@@ -5,6 +5,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * This class represents a JFrame that has a user interface. There
+ * are multiple widgets that the user can interact with that manipulate
+ * the construction of a fractal.
+ */
 public class MyFrame extends JFrame implements ActionListener {
     private Toolkit toolkit;
     public Integer DIAMETER = 100;
@@ -17,6 +22,10 @@ public class MyFrame extends JFrame implements ActionListener {
     private Color color = Color.BLACK;
     private Color backgroundColor = Color.WHITE;
 
+    /**
+     * Constructor initializes the main JFrame with the user interface,
+     * and also creates six different widgets.
+     */
     public MyFrame() {
         //JFrame
         this.setSize(960, 540);
@@ -151,7 +160,17 @@ public class MyFrame extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
     }
 
+    /**
+     * This class represents a graphics panel where the paint component is called,
+     * and the fractal is drawn with the Graphics tools.
+     */
     private class GPanel extends JPanel {
+        /**
+         * In this method, the background is set, the initial circle is created, and the
+         * recursive shape painter method is called.
+         *
+         * @param g
+         */
         @Override
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
@@ -161,6 +180,17 @@ public class MyFrame extends JFrame implements ActionListener {
             paintShape(g, recursionDepth, START_X, START_Y, RADIUS);
         }
 
+        /**
+         * This recursive painter method takes in the necessary position, size, and frequency data
+         * required to create child nodes for the fractal. The method will stop calling itself when
+         * the depth variable reaches 0.
+         *
+         * @param g object from Graphics class that gives us the tools to paint
+         * @param depth number of times the recursive function will run
+         * @param startX starting x-position on the graphics panel
+         * @param startY starting y-position on the graphics panel
+         * @param radius radius of child circle
+         */
         public void paintShape(Graphics g, Integer depth, Integer startX, Integer startY, Integer radius) {
             if (depth > 1) {
                 depth--;
@@ -177,9 +207,7 @@ public class MyFrame extends JFrame implements ActionListener {
                     paintShape(g, depth,
                             (int) ((radius * 2) * Math.cos(piValue) + startX),
                             (int) ((radius * 2) * Math.sin(piValue) + startY),
-                            radius * childParentRatio / 100
-                    );
-
+                            radius * childParentRatio / 100);
                     //parent to child lines
                     g.drawLine((int) ((radius * 2 - (radius * childParentRatio / 100)) * Math.cos(piValue) + startX),
                             (int) ((radius * 2 - (radius * childParentRatio / 100)) * Math.sin(piValue) + startY),
